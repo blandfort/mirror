@@ -7,6 +7,9 @@ import numpy as np
 LOGFILE = 'logs/emotions.log'
 #TODO handle in some config file
 
+TIMESTEP = .5  # How often we log (in seconds)
+
+
 def replace_float32(obj):
     """Utility function to recursively convert float32 entries to float,
     so the object can be converted to JSON."""
@@ -40,6 +43,7 @@ def make_logline(results):
 
 if __name__=='__main__':
     import cv2
+    import time
     from emotion_recognition import EmotionRecognition
 
     import logger
@@ -51,6 +55,8 @@ if __name__=='__main__':
     logging.info("Starting to log ...")
     try:
         while(True):
+            t1 = time.time()
+
             # Capture video frame-by-frame
             ret, frame = cap.read()
             # frame is now a numpy array with the current frame captured by the webcam
@@ -62,6 +68,11 @@ if __name__=='__main__':
                 line = make_logline(results)
                 with open(LOGFILE, 'a') as f:
                     f.write(line)
+
+            # Wait a bit if we are too fast
+            t2 = time.time()
+            if t2-t1 < TIMESTEP:
+                time.sleep(TIMESTEP-(t2-t1))
 
     finally:
         logging.info("Stopping log.")

@@ -3,7 +3,6 @@
 Next steps could be:
 
 - Log emotions for some time on a few different days, taking notes on own observed state afterwards or logging other activities as well (perhaps screenshots), then check if the log makes any sense
-    - Run detection without showing the stream, just give the labels
     - For other data, would be great to also log contents in browser or other applications that are "consumed", to correlate it to
 - Then analyze correlations, see if it makes sense
     - Consider postprocessing to account for problems with the detection
