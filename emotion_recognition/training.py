@@ -5,9 +5,10 @@ import torch.optim as optim
 import os
 import numpy as np
 
+#TODO wrap this thing up as package, so that .networks is used
 from networks import NetworkBasic
-from dataset import FERPlus
 #from .networks import NetworkBasic
+from dataset import FERPlus
 
 
 transform = transforms.Compose([

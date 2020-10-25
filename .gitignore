@@ -9,3 +9,6 @@ venv/*
 
 # Model files (too large for repo)
 models/*
+
+# Datasets
+FERPlus/*
