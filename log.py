@@ -3,12 +3,7 @@ import datetime
 import logging
 import numpy as np
 
-
-EMOTIONLOG = 'logs/emotions.log'
-BEHAVIORLOG = 'logs/behavior.log'
-#TODO handle in some config file
-
-TIMESTEP = .5  # How often we log (in seconds)
+from config import *
 
 
 def replace_float32(obj):
@@ -43,11 +38,13 @@ def make_logline(results):
 
 
 if __name__=='__main__':
+    import os
     import cv2
     import time
+    from PIL import Image
 
     from emotion_recognition import EmotionRecognition
-    from behavior import get_active_window_info
+    from behavior import get_active_window_info, take_screenshot
 
     import logger
 
@@ -74,13 +71,23 @@ if __name__=='__main__':
                 with open(EMOTIONLOG, 'a') as f:
                     f.write(line)
 
+                # Sometimes we even want a screenshot
+                if True: #TODO replace by some criterion
+                    take_screenshot(os.path.join(SCREENSHOT_DIR, 'shot.jpg'), resolution=(1000,500))
+                    #TODO use running ID or timestamp
+
                 # Log behavior too (if info is available)
                 if window_info is not None:
                     logging.info(str(window_info))
                     line = make_logline(window_info)
                     with open(BEHAVIORLOG, 'a') as f:
                         f.write(line)
-                #TODO put both into the same file?
+                #TODO put both into the same file? or use some sort of running ID to make linking easy
+
+                # Store some of the cam captures as well
+                if True: #TODO replace by some criterion
+                    #TODO would be better to only save image of face
+                    cv2.imwrite(os.path.join(CAMSHOT_DIR, 'capture.png'), frame)  #TODO use running ID or timestamp
 
             # Wait a bit if we are too fast
             t2 = time.time()

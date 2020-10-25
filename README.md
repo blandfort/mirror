@@ -3,7 +3,11 @@
 Next steps could be:
 
 - Decide when to take screenshots and save image captured by camera in logging
-- Log for some time on a few different days, taking notes on own observed state afterwards or logging other activities as well
+    - Functionality to take screenshots (save with resolution to make logging more data feasible) and saving detected face image
+    - For given emotions, specify how often a screenshot is triggered
+    - For given emotions, specify how often the face shot is saved
+    - Use one log file where all is written to a line (if screenshot is taken, have filename there as well)
+- Log for some time on a few different days
 - Then analyze correlations, see if it makes sense
     - Consider postprocessing to account for problems with the detection
     - Think of ways to have emmotion detection improve over time (like with active learning)
@@ -39,3 +43,4 @@ Room for improvement:
 - PyTorch
 - Torchvision
 - facenet-pytorch
+- pyscreenshot

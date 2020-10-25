@@ -1,0 +1,9 @@
+# Path settings
+EMOTIONLOG = 'logs/emotions.log'
+BEHAVIORLOG = 'logs/behavior.log'
+SCREENSHOT_DIR = 'logs/screenshots/'
+CAMSHOT_DIR = 'logs/cam/'
+
+# Logging behavior
+TIMESTEP = .5  # How often we log (in seconds)
+
