@@ -47,7 +47,7 @@ def get_active_window_info():
 
         match = re.match(b"WM_CLASS\(\w+\) = (?P<class>.+)$", line)
         if match is not None:
-            info['class'] = match.group("class").decode('utf-8') #.strip(b'"')
+            info['class'] = match.group("class").decode('utf-8').replace('"', '') #.strip(b'"')
 
     if len(info):
         return info
