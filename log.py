@@ -1,10 +1,7 @@
-import cv2
 import json
 import datetime
 import logging
 import numpy as np
-
-from emotion_recognition import EmotionRecognition
 
 
 LOGFILE = 'logs/emotions.log'
@@ -42,6 +39,11 @@ def make_logline(results):
 
 
 if __name__=='__main__':
+    import cv2
+    from emotion_recognition import EmotionRecognition
+
+    import logger
+
     er = EmotionRecognition(device='cpu')
 
     cap = cv2.VideoCapture(0)
@@ -56,8 +58,10 @@ if __name__=='__main__':
             results = er.recognize(frame)
 
             if len(results):
+                logging.info(str(results))
+                line = make_logline(results)
                 with open(LOGFILE, 'a') as f:
-                    f.write(make_logline(results))
+                    f.write(line)
 
     finally:
         logging.info("Stopping log.")
