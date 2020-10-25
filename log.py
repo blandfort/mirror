@@ -32,9 +32,9 @@ def replace_float32(obj):
     else:
         raise Exception("Not implemented!")
 
-def make_logline(results):
+def make_logline(results, id_):
     now = datetime.datetime.now().isoformat()
-    return now+','+json.dumps(replace_float32(results))+'\n'
+    return str(id_)+','+now+','+json.dumps(replace_float32(results))+'\n'
 
 
 if __name__=='__main__':
@@ -52,6 +52,14 @@ if __name__=='__main__':
 
     cap = cv2.VideoCapture(0)
 
+    # Figure out the most recent ID so far
+    id_ = 0
+    if os.path.isfile(EMOTIONLOG):
+        with open(EMOTIONLOG, 'r') as f:
+            for line in f:
+                if len(line.strip())>0:
+                    id_ = int(line.split(',')[0])+1
+
     logging.info("Starting to log ...")
     try:
         while(True):
@@ -67,28 +75,28 @@ if __name__=='__main__':
 
             if len(results):
                 logging.info(str(results))
-                line = make_logline(results)
+                line = make_logline(results, id_)
                 with open(EMOTIONLOG, 'a') as f:
                     f.write(line)
 
                 # Sometimes we even want a screenshot
                 if True: #TODO replace by some criterion
-                    take_screenshot(os.path.join(SCREENSHOT_DIR, 'shot.jpg'), resolution=SCREENSHOT_RESOLUTION)
-                    #TODO use running ID or timestamp
+                    take_screenshot(os.path.join(SCREENSHOT_DIR, '%d.jpg'%id_), resolution=SCREENSHOT_RESOLUTION)
 
                 # Log behavior too (if info is available)
                 if window_info is not None:
                     logging.info(str(window_info))
-                    line = make_logline(window_info)
+                    line = make_logline(window_info, id_)
                     with open(BEHAVIORLOG, 'a') as f:
                         f.write(line)
-                #TODO put both into the same file? or use some sort of running ID to make linking easy
 
                 # Store some of the cam captures as well
                 if True: #TODO replace by some criterion
-                    for r in results:
+                    for ix,r in enumerate(results):
                         face = frame[r['position'][1]:r['position'][3], r['position'][0]:r['position'][2]]
-                        cv2.imwrite(os.path.join(CAMSHOT_DIR, 'capture.png'), face)  #TODO use running ID or timestamp
+                        cv2.imwrite(os.path.join(CAMSHOT_DIR, '%d_%d.png' % (id_, ix)), face) 
+
+                id_ += 1
 
             # Wait a bit if we are too fast
             t2 = time.time()
