@@ -6,4 +6,4 @@ CAMSHOT_DIR = 'logs/cam/'
 
 # Logging behavior
 TIMESTEP = .5  # How often we log (in seconds)
-
+SCREENSHOT_RESOLUTION = (1000,500)

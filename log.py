@@ -73,7 +73,7 @@ if __name__=='__main__':
 
                 # Sometimes we even want a screenshot
                 if True: #TODO replace by some criterion
-                    take_screenshot(os.path.join(SCREENSHOT_DIR, 'shot.jpg'), resolution=(1000,500))
+                    take_screenshot(os.path.join(SCREENSHOT_DIR, 'shot.jpg'), resolution=SCREENSHOT_RESOLUTION)
                     #TODO use running ID or timestamp
 
                 # Log behavior too (if info is available)
@@ -86,8 +86,9 @@ if __name__=='__main__':
 
                 # Store some of the cam captures as well
                 if True: #TODO replace by some criterion
-                    #TODO would be better to only save image of face
-                    cv2.imwrite(os.path.join(CAMSHOT_DIR, 'capture.png'), frame)  #TODO use running ID or timestamp
+                    for r in results:
+                        face = frame[r['position'][1]:r['position'][3], r['position'][0]:r['position'][2]]
+                        cv2.imwrite(os.path.join(CAMSHOT_DIR, 'capture.png'), face)  #TODO use running ID or timestamp
 
             # Wait a bit if we are too fast
             t2 = time.time()

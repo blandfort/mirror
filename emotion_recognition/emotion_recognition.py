@@ -10,7 +10,7 @@ from .dataset import FERPlus
 from .networks import NetworkBasic
 
 
-#TODO put the path into some configuration file
+#TODO put the path into some configuration file or pass as argument to init
 MODEL_PATH = 'models/own.pt'
 
 
