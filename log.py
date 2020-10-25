@@ -4,7 +4,8 @@ import logging
 import numpy as np
 
 
-LOGFILE = 'logs/emotions.log'
+EMOTIONLOG = 'logs/emotions.log'
+BEHAVIORLOG = 'logs/behavior.log'
 #TODO handle in some config file
 
 TIMESTEP = .5  # How often we log (in seconds)
@@ -44,7 +45,9 @@ def make_logline(results):
 if __name__=='__main__':
     import cv2
     import time
+
     from emotion_recognition import EmotionRecognition
+    from behavior import get_active_window_info
 
     import logger
 
@@ -61,13 +64,23 @@ if __name__=='__main__':
             ret, frame = cap.read()
             # frame is now a numpy array with the current frame captured by the webcam
 
+            window_info = get_active_window_info()
+
             results = er.recognize(frame)
 
             if len(results):
                 logging.info(str(results))
                 line = make_logline(results)
-                with open(LOGFILE, 'a') as f:
+                with open(EMOTIONLOG, 'a') as f:
                     f.write(line)
+
+                # Log behavior too (if info is available)
+                if window_info is not None:
+                    logging.info(str(window_info))
+                    line = make_logline(window_info)
+                    with open(BEHAVIORLOG, 'a') as f:
+                        f.write(line)
+                #TODO put both into the same file?
 
             # Wait a bit if we are too fast
             t2 = time.time()

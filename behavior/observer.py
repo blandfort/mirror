@@ -43,11 +43,11 @@ def get_active_window_info():
     for line in stdout.split(b'\n'):
         match = re.match(b"WM_NAME\(\w+\) = (?P<name>.+)$", line)
         if match is not None:
-            info['title'] = match.group("name").strip(b'"')
+            info['title'] = match.group("name").strip(b'"').decode('utf-8')
 
         match = re.match(b"WM_CLASS\(\w+\) = (?P<class>.+)$", line)
         if match is not None:
-            info['class'] = match.group("class") #.strip(b'"')
+            info['class'] = match.group("class").decode('utf-8') #.strip(b'"')
 
     if len(info):
         return info
