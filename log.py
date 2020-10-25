@@ -38,6 +38,7 @@ def make_logline(results, id_):
 
 
 if __name__=='__main__':
+    #TODO put some of that stuff into beautiful classes and functions
     import os
     import cv2
     import time
@@ -48,7 +49,7 @@ if __name__=='__main__':
 
     import logger
 
-    er = EmotionRecognition(device='cpu')
+    er = EmotionRecognition(device=DEVICE)
 
     cap = cv2.VideoCapture(0)
 
@@ -59,6 +60,12 @@ if __name__=='__main__':
             for line in f:
                 if len(line.strip())>0:
                     id_ = int(line.split(',')[0])+1
+
+    # Initialize the frequency countdowns
+    screenshot_countdown = {emotion: SCREENSHOT_FREQUENCIES[emotion] if emotion in SCREENSHOT_FREQUENCIES
+                                    else SCREENSHOT_FREQUENCIES['other'] for emotion in er.emotions}
+    cam_countdown = {emotion: CAM_FREQUENCIES[emotion] if emotion in CAM_FREQUENCIES
+                                    else CAM_FREQUENCIES['other'] for emotion in er.emotions}
 
     logging.info("Starting to log ...")
     try:
@@ -79,9 +86,22 @@ if __name__=='__main__':
                 with open(EMOTIONLOG, 'a') as f:
                     f.write(line)
 
+                detected_emotion = results[0]['emotion']
+                # Generally can assume that first result will be the right face in case of multiple candidates
+
                 # Sometimes we even want a screenshot
-                if True: #TODO replace by some criterion
+                if screenshot_countdown[detected_emotion]<=1:
+                    logging.info("Taking screenshot ...")
+
                     take_screenshot(os.path.join(SCREENSHOT_DIR, '%d.jpg'%id_), resolution=SCREENSHOT_RESOLUTION)
+
+                    # Reset the countdown
+                    if detected_emotion in SCREENSHOT_FREQUENCIES:
+                        screenshot_countdown[detected_emotion] = SCREENSHOT_FREQUENCIES[detected_emotion]
+                    else:
+                        screenshot_countdown[detected_emotion] = SCREENSHOT_FREQUENCIES['other']
+                else:
+                    screenshot_countdown[detected_emotion] -= 1
 
                 # Log behavior too (if info is available)
                 if window_info is not None:
@@ -91,10 +111,20 @@ if __name__=='__main__':
                         f.write(line)
 
                 # Store some of the cam captures as well
-                if True: #TODO replace by some criterion
+                if cam_countdown[detected_emotion]<=1:
+                    logging.info("Capturing cam ...")
+
                     for ix,r in enumerate(results):
                         face = frame[r['position'][1]:r['position'][3], r['position'][0]:r['position'][2]]
                         cv2.imwrite(os.path.join(CAMSHOT_DIR, '%d_%d.png' % (id_, ix)), face) 
+
+                    # Reset the countdown
+                    if detected_emotion in CAM_FREQUENCIES:
+                        cam_countdown[detected_emotion] = CAM_FREQUENCIES[detected_emotion]
+                    else:
+                        cam_countdown[detected_emotion] = CAM_FREQUENCIES['other']
+                else:
+                    cam_countdown[detected_emotion] -= 1
 
                 id_ += 1
 

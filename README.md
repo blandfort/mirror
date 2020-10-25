@@ -2,9 +2,6 @@
 
 Next steps could be:
 
-- Decide when to take screenshots and save image captured by camera in logging
-    - For given emotions, specify how often a screenshot is triggered
-    - For given emotions, specify how often the face shot is saved
 - Log for some time on a few different days
 - Then analyze correlations, see if it makes sense
     - Consider postprocessing to account for problems with the detection
