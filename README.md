@@ -2,8 +2,11 @@
 
 Next steps could be:
 
-- Log emotions for some time on a few different days, taking notes on own observed state afterwards or logging other activities as well (perhaps screenshots), then check if the log makes any sense
-    - For other data, would be great to also log contents in browser or other applications that are "consumed", to correlate it to
+- Log contents in browser or other applications that are "consumed", to correlate it to
+    - Detect which window is focused
+    - For some windows (like browser), get more finegrained information
+- Decide when to take screenshots and save image captured by camera in logging
+- Log for some time on a few different days, taking notes on own observed state afterwards or logging other activities as well
 - Then analyze correlations, see if it makes sense
     - Consider postprocessing to account for problems with the detection
     - Think of ways to have emmotion detection improve over time (like with active learning)
