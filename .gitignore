@@ -1,0 +1,11 @@
+__pycache__/*
+*/__pycache__/*
+
+# Temporary editor files
+*.swp
+
+# Virtual environment files
+venv/*
+
+# Model files (too large for repo)
+models/*
