@@ -26,3 +26,9 @@ Next steps could be:
     - How about active learning with my own webcam data?
 
 
+## Requirements
+
+- OpenCV: `pip install opencv-python` (note that on debian, version 4.4.0.44 causes issues, but 4.2.0.34 works)
+- PyTorch
+- Torchvision
+- facenet-pytorch

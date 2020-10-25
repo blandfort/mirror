@@ -20,8 +20,8 @@ transform = transforms.Compose([
 
 
 #TODO put paths to configuration files
-DATA_DIR = '/home/john/code/webcam/FERPlus/data'
-MODEL_PATH = '/home/john/code/webcam/models/own.pt'
+DATA_DIR = '../FERPlus/data'
+MODEL_PATH = '../models/own.pt'
 
 
 if __name__=='__main__':

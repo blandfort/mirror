@@ -11,7 +11,7 @@ from .networks import NetworkBasic
 
 
 #TODO put the path into some configuration file
-MODEL_PATH = '/home/john/code/webcam/models/own.pt'
+MODEL_PATH = 'models/own.pt'
 
 
 class EmotionRecognition(object):
@@ -64,7 +64,25 @@ class EmotionRecognition(object):
 
         return self.emotions[index], score
 
-    def recognize_emotion(self, frame, return_type='BGR'):
+    def recognize(self, frame):
+        """Perform emotion recognition on a single frame and return the results.
+
+        Different from show_emotions(), this method does not return a modified frame."""
+        f_h, f_w, c = frame.shape
+        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        boxes, _ = self.mtcnn.detect(frame)
+
+        results = []
+        if boxes is not None:
+            for i in range(len(boxes)):
+                x1, y1, x2, y2 = int(round(boxes[i][0])), int(round(boxes[i][1])), int(round(boxes[i][2])), int(
+                    round(boxes[i][3]))
+                emotion, score = self._predict(gray[y1:y2, x1:x2])
+
+                results.append( {'emotion': emotion, 'score': score, 'position': (x1, y1, x2, y2)} )
+        return results
+
+    def show_emotions(self, frame, return_type='BGR'):
         """Perform emotion recognition on a single frame and show the result
         by returning a modified frame.
 
