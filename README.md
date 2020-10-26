@@ -2,11 +2,13 @@
 
 Next steps could be:
 
-- Log for some time on a few different days
-- Then analyze correlations, see if it makes sense
-    - Consider postprocessing to account for problems with the detection
-    - Think of ways to have emmotion detection improve over time (like with active learning)
-- Clean up the repo, add some documentation, properly formulate long-term vision and make the thing open source
+- Clean up the repo, add some documentation
+    - Separate things clearly into modules
+    - Add instructions so that training with FERPlus can easily be done
+    - How to share the trained model?
+- Properly formulate long-term vision
+- Make the thing open source ;)
+- Think of ways to have emotion detection improve over time (like with active learning)
 
 
 ## On the Vision
@@ -19,6 +21,13 @@ Next steps could be:
     - Share trained models and extensions with others
     - Discuss insights and share ideas for using the software creatively
     - Could even consider sharing some of the data with the community for more comprehensive studies or even research projects
+
+
+## Analysis
+
+Also do:
+
+- Analyze some correlations, see if it makes any sense
 
 
 ## Logging Behavior
@@ -59,3 +68,5 @@ Potential extensions:
 - Torchvision
 - facenet-pytorch
 - pyscreenshot
+- jupyter (for analysis part)
+- matplotlib (for analysis)
