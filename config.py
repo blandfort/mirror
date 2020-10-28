@@ -1,6 +1,6 @@
 # Path settings
-EMOTIONLOG = 'logs/emotions.log'
-BEHAVIORLOG = 'logs/behavior.log'
+EMOTIONLOG = 'logs/emotions_v2.log'
+BEHAVIORLOG = 'logs/behavior_v2.log'
 SCREENSHOT_DIR = 'logs/screenshots/'
 CAMSHOT_DIR = 'logs/cam/'
 

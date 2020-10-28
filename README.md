@@ -3,8 +3,13 @@
 Next steps could be:
 
 - Clean up the repo, add some documentation
-    - Separate things clearly into modules
-    - Revise this whole memory/logging thing
+    - Make it possible to memorize webcam as well
+    - Playback mode for mirror, including possibility to remember stuff (which would be used by analysis module)
+    - Add other log functionality from before
+        - behavior log
+        - screenshots
+        - face images instead of full capture
+        - logic to not save everything every time
     - Add instructions so that training with FERPlus can easily be done
     - How to share the trained model?
 - Properly formulate long-term vision
@@ -12,7 +17,9 @@ Next steps could be:
 - Think of ways to have emotion detection improve over time (like with active learning)
 
 
-## On the Vision
+## The Vision
+
+TODO explain main metaphors and where this project shall go
 
 - Develop a tool to help people understand themselves
     - Putting you completely in charge regarding what you log, what you analyze and whether or not you share that with anyone
@@ -24,7 +31,16 @@ Next steps could be:
     - Could even consider sharing some of the data with the community for more comprehensive studies or even research projects
 
 
-## Modules
+## Code Structure
+
+TODO explain overall structure, what kind of modules we have and how the flow is
+
+### Overview
+
+- Mirror: highest level, containing Shards and optionally a Lens
+    - Shard
+        - Memory: Can be used to store data of a certain type 
+    - Lens
 
 
 ### Analysis
