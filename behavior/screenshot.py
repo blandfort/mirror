@@ -1,4 +1,3 @@
-# Simple script that takes a screenshot upon load
 import pyscreenshot as ImageGrab
 
 def take_screenshot(path, resolution=None):

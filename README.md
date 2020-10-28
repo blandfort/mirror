@@ -4,10 +4,10 @@ Next steps could be:
 
 - Clean up the repo, add some documentation
     - Add other log functionality from before
-        - behavior log
-        - screenshots
+        - check if behavior log and screenshots are working
         - face images instead of full capture
         - logic to not save everything every time
+    - Organize stuff into subdirs
     - Add instructions so that training with FERPlus can easily be done
     - How to share the trained model?
 - Properly formulate long-term vision

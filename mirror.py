@@ -14,20 +14,23 @@ class Shard(ABC):
     Initialize one to catch and reflect particular Rays of Behavior."""
 
     def __init__(self):
-        pass
+        self.memory = None
 
     @abstractmethod
     def reflect(self, rays: dict):
         """Update and return the current state."""
         pass
 
-    @abstractmethod
     def memorize(self, id_):
         """Memorize the current state."""
-        pass
+        if self.memory is not None:
+            self.memory.memorize(self.state, id_=id_)
 
     def remember(self, id_):
-        return self.memory.remember(id_=id_)
+        if self.memory is not None:
+            return self.memory.remember(id_=id_)
+        else:
+            return None
 
 
 class CamShard(Shard):
@@ -47,10 +50,6 @@ class CamShard(Shard):
         ret, frame = self.capture.read()
         self.state = frame
         return self.state
-
-    def memorize(self, id_):
-        if self.memory is not None:
-            self.memory.memorize(self.state, id_=id_)
 
     def __del__(self):
         # Release the camera

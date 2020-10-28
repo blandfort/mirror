@@ -1,12 +1,11 @@
 import os
 import cv2 as cv
 
-from mirror import Shard, CamLens
 from emotion_recognition import EmotionRecognition
+from mirror import Shard, CamLens
 from memory import CSVMemory
 
 from config import DEVICE, EMOTIONLOG
-
 
 
 class EmotionShard(Shard):
@@ -27,9 +26,6 @@ class EmotionShard(Shard):
             return self.state
         else:
             raise Exception("Need webcam capture to detect emotions!")
-
-    def memorize(self, id_):
-        self.memory.memorize(self.state, id_=id_)
 
 
 class EmotionLens(CamLens):
