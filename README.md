@@ -4,6 +4,9 @@ Next steps could be:
 
 - Clean up the repo, add some documentation
     - Playback mode for mirror, including possibility to remember stuff (which would be used by analysis module)
+        - Need to assign some proper IDs
+        - Function to get sequence of states by date limits
+        - Function to dream such a sequence, i.e. run it as it was presently happening
     - Add other log functionality from before
         - behavior log
         - screenshots

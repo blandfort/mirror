@@ -1,4 +1,5 @@
 # Path settings
+MIRRORLOG = 'logs/mirror.log'
 EMOTIONLOG = 'logs/emotions_v2.log'
 BEHAVIORLOG = 'logs/behavior_v2.log'
 SCREENSHOT_DIR = 'logs/screenshots/'

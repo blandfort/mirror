@@ -1,10 +1,11 @@
 import logging
 import cv2 as cv
 import time
+import datetime
 
 from abc import ABC, abstractmethod
 
-from memory import ImageMemory
+from memory import ImageMemory, CSVMemory
 
 
 class Shard(ABC):
@@ -86,12 +87,14 @@ class Mirror:
     where each Shard in a Mirror can catch and reflect particular Rays of behavior
     and the Lens is used to make certain parts observable."""
 
-    def __init__(self, shards: list, lens: Lens, timestep=1.):
+    def __init__(self, logfile, shards: list, lens: Lens, timestep=1.):
         self.shards = shards
         self.lens = lens
         self.timestep = timestep
+        self.memory = CSVMemory(logfile)
 
         self.current_id = 0
+        #TODO might want to start somewhere else; or make it based on datetime anyway
 
     def reflect(self, rays={}):
         """Reflect the current state of affairs."""
@@ -101,6 +104,12 @@ class Mirror:
 
     def memorize(self):
         """Memorize the current state."""
+        info = {'timestamp': datetime.datetime.now().isoformat()}
+        #TODO not sure we want to store all of this for each time step
+        info['shards'] = [{'name': shard.name, 'class': str(shard.__class__)} for shard in self.shards]
+        info['timestep'] = self.timestep
+        self.memory.memorize(id_=self.current_id, content=info)
+
         for shard in self.shards:
             shard.memorize(id_=self.current_id)
 
@@ -137,6 +146,8 @@ class Mirror:
 if __name__=='__main__':
     import logger
     from emotions import EmotionShard, EmotionLens
+    from config import MIRRORLOG
 
-    mirror = Mirror(shards=[CamShard(logdir='logs/test/'), EmotionShard()], lens=EmotionLens(), timestep=1.)
+    shards = [CamShard(logdir='logs/test/'), EmotionShard()]
+    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=1., logfile=MIRRORLOG)
     mirror.run(memorize=True)
