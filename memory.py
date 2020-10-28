@@ -93,7 +93,6 @@ class CSVMemory:
 
 
 import cv2 as cv
-from PIL import Image
 
 
 class ImageMemory:
@@ -117,7 +116,7 @@ class ImageMemory:
         filepath = os.path.join(self.dir, name)
 
         if os.path.isfile(filepath):
-            return Image.open(filepath)
+            return cv.imread(filepath)
         else:
             logging.warning("Couldn't find image with name '%s'!" % name)
             return None

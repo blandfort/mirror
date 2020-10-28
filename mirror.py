@@ -97,7 +97,11 @@ class Mirror:
         self.memory = CSVMemory(logfile)
 
         self.current_id = 0
-        #TODO might want to start somewhere else; or make it based on datetime anyway
+
+        # Figure out the next ID
+        ids = [int(id_) for id_ in self.memory.remember().keys()]
+        if len(ids)>0:
+            self.current_id = max(ids)+1
 
     def reflect(self, rays={}):
         """Reflect the current state of affairs."""
@@ -138,8 +142,6 @@ class Mirror:
             for rays in self.remember(from_date=from_date, to_date=to_date):
                 t1 = time.time()
 
-                rays = self.reflect()
-
                 self.lens.show(rays)
 
                 # Wait a bit if we are too fast
@@ -176,11 +178,12 @@ if __name__=='__main__':
     from emotions import EmotionShard, EmotionLens
     from config import MIRRORLOG
 
-    # Logging
     shards = [CamShard(logdir='logs/test/'), EmotionShard()]
+
+    # Logging
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=1., logfile=MIRRORLOG)
     #mirror.run(memorize=True)
 
     # Dreaming
-    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=1., logfile=MIRRORLOG)
-    mirror.dream()
+    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.3, logfile=MIRRORLOG)
+    mirror.dream(from_date=datetime.datetime(year=2020, month=10, day=28, hour=18))

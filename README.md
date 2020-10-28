@@ -4,7 +4,6 @@ Next steps could be:
 
 - Clean up the repo, add some documentation
     - Playback mode for mirror, including possibility to remember stuff (which would be used by analysis module)
-        - Need to assign some proper IDs (get suitable starting id in init)
         - Have base class for Memory
     - Add other log functionality from before
         - behavior log
@@ -49,6 +48,7 @@ TODO explain overall structure, what kind of modules we have and how the flow is
 Also do:
 
 - Analyze some correlations, see if it makes any sense
+- Create reports (so that e.g. end of the week you can view a summary)
 
 
 ### Logging Behavior
