@@ -43,6 +43,49 @@ class CSVMemory:
         with open(self.logfile, 'a') as f:
             f.write(line)
 
+    def remember(self, id_=None, from_date=None, to_date=None):
+        if id_ is not None:
+            return self._remember_id(id_=id_)
+
+        memories = {}
+        with open(self.logfile, 'r') as f:
+            for line in f:
+                parts = self._parse_logline(line)
+
+                if parts is None:
+                    continue
+                line_id, timestamp, content = parts
+
+                if from_date is not None and from_date>timestamp:
+                    continue
+                if to_date is not None and to_date<timestamp:
+                    continue
+
+                memories[line_id] = content
+        return memories
+
+    def _remember_id(self, id_):
+        sid = str(id_)
+
+        with open(self.logfile, 'r') as f:
+            for line in f:
+                parts = self._parse_logline(line)
+
+                if parts is None:
+                    continue
+
+                line_id, timestamp, content = parts
+                if line_id==str(sid):
+                    return content
+        return None
+
+    def _parse_logline(self, line):
+        parts = line.strip().split(',', 2)
+
+        if len(parts)<3:
+            return None
+        return parts[0], datetime.datetime.fromisoformat(parts[1]), json.loads(parts[2])
+
     def _make_logline(self, results, id_):
         #TODO make this whole thing simpler by using csvwriter
         now = datetime.datetime.now().isoformat()
@@ -50,6 +93,8 @@ class CSVMemory:
 
 
 import cv2 as cv
+from PIL import Image
+
 
 class ImageMemory:
     """Memory to store images in a designated directory."""
@@ -66,6 +111,16 @@ class ImageMemory:
         #TODO if the directory doesn't exist, the writing doesn't work,
         # but this doesn't seem to appear anywhere in the log
         return image_path
+
+    def remember(self, id_, title=None):
+        name = self._make_name(id_=id_, title=title)
+        filepath = os.path.join(self.dir, name)
+
+        if os.path.isfile(filepath):
+            return Image.open(filepath)
+        else:
+            logging.warning("Couldn't find image with name '%s'!" % name)
+            return None
 
     def _make_name(self, id_, title):
         if title is not None:

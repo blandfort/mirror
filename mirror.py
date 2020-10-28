@@ -26,6 +26,9 @@ class Shard(ABC):
         """Memorize the current state."""
         pass
 
+    def remember(self, id_):
+        return self.memory.remember(id_=id_)
+
 
 class CamShard(Shard):
 
@@ -115,11 +118,36 @@ class Mirror:
 
         self.current_id += 1
 
-    def remember(self, **kwargs):
+    def remember(self, from_date=None, to_date=None):
         """Retrieve particular states from memory."""
-        memory = {name: shard.remember(**kwargs) for name,shard in self.shards.items()}
-        #TODO might want to organize this differently (like by datetime) to make things more convenient
+        info = self.memory.remember(from_date=from_date, to_date=to_date)
+        ids = sorted(list(info.keys()))
+
+        memory = []
+        for id_ in ids:
+            snippet = {shard.name: shard.remember(id_=id_) for shard in self.shards}
+            snippet['timestamp'] = info[id_]['timestamp']
+            memory.append(snippet)
         return memory
+
+    def dream(self, from_date=None, to_date=None):
+        """Re-run an older sequence of states."""
+        logging.info("Mirror starting to dream.")
+
+        try:
+            for rays in self.remember(from_date=from_date, to_date=to_date):
+                t1 = time.time()
+
+                rays = self.reflect()
+
+                self.lens.show(rays)
+
+                # Wait a bit if we are too fast
+                t2 = time.time()
+                if t2-t1 < self.timestep:
+                    time.sleep(self.timestep - (t2-t1))
+        finally:
+            logging.info("Waking up from the dream.")
 
     def run(self, memorize=False):
         logging.info("Activating the Mirror.")
@@ -148,6 +176,11 @@ if __name__=='__main__':
     from emotions import EmotionShard, EmotionLens
     from config import MIRRORLOG
 
+    # Logging
     shards = [CamShard(logdir='logs/test/'), EmotionShard()]
+    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=1., logfile=MIRRORLOG)
+    #mirror.run(memorize=True)
+
+    # Dreaming
     mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=1., logfile=MIRRORLOG)
-    mirror.run(memorize=True)
+    mirror.dream()
