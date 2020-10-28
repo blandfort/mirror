@@ -89,26 +89,21 @@ class EmotionRecognition(object):
         The returned frame has a bounding box around all detected faces
         plus the names of the detected emotions."""
         f_h, f_w, c = frame.shape
-        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-        boxes, _ = self.mtcnn.detect(frame)
+        detection = self.recognize(frame)
 
-        if boxes is not None:
-            for i in range(len(boxes)):
-                x1, y1, x2, y2 = int(round(boxes[i][0])), int(round(boxes[i][1])), int(round(boxes[i][2])), int(
-                    round(boxes[i][3]))
-                emotion, score = self._predict(gray[y1:y2, x1:x2])
+        for result in detection:
+            x1, y1, x2, y2 = result['position']
+            emotion = result['emotion']
+            score = result['score']
 
-                frame = cv.rectangle(frame, (x1, y1), (x2, y2), color=[0, 255, 0], thickness=1)
-                frame = cv.rectangle(frame, (x1, y1 - int(f_h*0.03125)), (x1 + int(f_w*0.21), y1), color=[0, 255, 0], thickness=-1)
-                frame = cv.putText(frame, text=emotion+' (%0.2f)'%score, org=(x1 + 5, y1 - 3), fontFace=cv.FONT_HERSHEY_PLAIN,
-                                   color=[0, 0, 0], fontScale=1, thickness=1)
+            frame = cv.rectangle(frame, (x1, y1), (x2, y2), color=[0, 255, 0], thickness=1)
+            frame = cv.rectangle(frame, (x1, y1 - int(f_h*0.03125)), (x1 + int(f_w*0.21), y1), color=[0, 255, 0], thickness=-1)
+            frame = cv.putText(frame, text=emotion+' (%0.2f)'%score, org=(x1 + 5, y1 - 3), fontFace=cv.FONT_HERSHEY_PLAIN,
+                               color=[0, 0, 0], fontScale=1, thickness=1)
 
-            if return_type == 'BGR':
-                return frame
-            if return_type == 'RGB':
-                return cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+        if return_type == 'BGR':
+            return frame
+        if return_type == 'RGB':
+            return cv.cvtColor(frame, cv.COLOR_BGR2RGB)
         else:
-            if return_type == 'BGR':
-                return frame
-            if return_type == 'RGB':
-                return cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            raise Exception("Unknown return_type!")

@@ -1,9 +1,10 @@
-# Mirror
+# Reflection
 
 Next steps could be:
 
 - Clean up the repo, add some documentation
     - Separate things clearly into modules
+    - Revise this whole memory/logging thing
     - Add instructions so that training with FERPlus can easily be done
     - How to share the trained model?
 - Properly formulate long-term vision
@@ -23,14 +24,17 @@ Next steps could be:
     - Could even consider sharing some of the data with the community for more comprehensive studies or even research projects
 
 
-## Analysis
+## Modules
+
+
+### Analysis
 
 Also do:
 
 - Analyze some correlations, see if it makes any sense
 
 
-## Logging Behavior
+### Logging Behavior
 
 Room for improvement:
 
@@ -41,7 +45,7 @@ Room for improvement:
     - Mouse movement and clicks (even the way how dynamically one moves the mouse might be telling about emotions)
 
 
-## Emotion Detection
+### Emotion Detection
 
 - Model trained on FERPlus seems reasonable already (SOTA on that dataset is not even that high)
     - Happiness is detected alright

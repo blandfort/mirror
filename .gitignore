@@ -15,3 +15,6 @@ models/*
 
 # Datasets
 FERPlus/*
+
+# Jupyter checkpoints
+.ipynb_checkpoints/*
