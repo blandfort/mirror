@@ -48,3 +48,28 @@ class CSVMemory:
         now = datetime.datetime.now().isoformat()
         return str(id_)+','+now+','+json.dumps(replace_float32(results))+'\n'
 
+
+import cv2 as cv
+
+class ImageMemory:
+    """Memory to store images in a designated directory."""
+
+    def __init__(self, logdir, extension='png'):
+        self.dir = logdir
+        self.ext = extension
+
+    def memorize(self, image, id_, title=None):
+        name = self._make_name(id_, title)
+        image_path = os.path.join(self.dir, name)
+
+        cv.imwrite(image_path, image)
+        #TODO if the directory doesn't exist, the writing doesn't work,
+        # but this doesn't seem to appear anywhere in the log
+        return image_path
+
+    def _make_name(self, id_, title):
+        if title is not None:
+            return f"{id_}_{title}.{self.ext}"
+        else:
+            return f"{id_}.{self.ext}"
+

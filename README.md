@@ -3,7 +3,6 @@
 Next steps could be:
 
 - Clean up the repo, add some documentation
-    - Make it possible to memorize webcam as well
     - Playback mode for mirror, including possibility to remember stuff (which would be used by analysis module)
     - Add other log functionality from before
         - behavior log

@@ -4,6 +4,8 @@ import time
 
 from abc import ABC, abstractmethod
 
+from memory import ImageMemory
+
 
 class Shard(ABC):
     """Shards are components of a Mirror.
@@ -28,15 +30,23 @@ class CamShard(Shard):
 
     name = "webcam"
 
-    def __init__(self, cam_id=0):
+    def __init__(self, cam_id=0, **memory_kwargs):
         self.capture = cv.VideoCapture(cam_id)
+
+        if 'logdir' in memory_kwargs:
+            self.memory = ImageMemory(**memory_kwargs)
+        else:
+            logging.warning("Memory not activated for Shard '%s'."%self.name)
+            self.memory = None
 
     def reflect(self, rays: dict):
         ret, frame = self.capture.read()
-        return frame
+        self.state = frame
+        return self.state
 
     def memorize(self, id_):
-        logging.warning("Not implemented.")
+        if self.memory is not None:
+            self.memory.memorize(self.state, id_=id_)
 
     def __del__(self):
         # Release the camera
@@ -128,5 +138,5 @@ if __name__=='__main__':
     import logger
     from emotions import EmotionShard, EmotionLens
 
-    mirror = Mirror(shards=[CamShard(), EmotionShard()], lens=EmotionLens(), timestep=.5)
+    mirror = Mirror(shards=[CamShard(logdir='logs/test/'), EmotionShard()], lens=EmotionLens(), timestep=1.)
     mirror.run(memorize=True)
