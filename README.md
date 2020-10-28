@@ -3,8 +3,6 @@
 Next steps could be:
 
 - Clean up the repo, add some documentation
-    - Playback mode for mirror, including possibility to remember stuff (which would be used by analysis module)
-        - Have base class for Memory
     - Add other log functionality from before
         - behavior log
         - screenshots

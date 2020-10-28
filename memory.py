@@ -3,6 +3,8 @@ import os
 import json
 import numpy as np
 
+from abc import ABC, abstractmethod
+
 
 def replace_float32(obj):
     """Utility function to recursively convert float32 entries to float,
@@ -31,7 +33,17 @@ def replace_float32(obj):
         raise Exception("Not implemented!")
 
 
-class CSVMemory:
+class Memory(ABC):
+
+    @abstractmethod
+    def memorize(self, content, id_):
+        pass
+
+    @abstractmethod
+    def remember(self, id_):
+        pass
+
+class CSVMemory(Memory):
     """Simple memory to store data in a single log file in CSV format."""
 
     def __init__(self, logfile):
@@ -95,7 +107,7 @@ class CSVMemory:
 import cv2 as cv
 
 
-class ImageMemory:
+class ImageMemory(Memory):
     """Memory to store images in a designated directory."""
 
     def __init__(self, logdir, extension='png'):
