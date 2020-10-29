@@ -115,7 +115,7 @@ import cv2 as cv
 class ImageMemory(Memory):
     """Memory to store images in a designated directory."""
 
-    def __init__(self, logdir, extension='png'):
+    def __init__(self, logdir, extension='jpg'):
         self.dir = logdir
         self.ext = extension
 
@@ -140,6 +140,10 @@ class ImageMemory(Memory):
         else:
             logging.warning("Couldn't find image with name '%s'!" % name)
             return None
+
+    def search(self, startswith):
+        """Find memories with names starting with a given string."""
+        return [name for name in os.listdir(self.dir) if name.startswith(startswith)]
 
     def _make_name(self, id_, title):
         if title is not None:

@@ -20,9 +20,16 @@ class EmotionShard(Shard):
         self.state = None
 
     def reflect(self, rays):
+        if 'faces' in rays:
+            results = []
+            for face in rays['faces']:
+                result = self.recognition.run_on_face(face['image'])
+                result['position'] = face['bounding_box']
+                results.append(result)
+            self.state = results
+            return self.state
         if 'webcam' in rays:
-            results = self.recognition.recognize(rays['webcam'])
-            #results = self.recognition.show_emotions(rays['webcam'], return_type='BGR')
+            results = self.recognition.run(rays['webcam'])
             self.state = results
             return self.state
         else:
@@ -52,9 +59,6 @@ class EmotionLens(CamLens):
                 frame = cv.rectangle(frame, (x1, y1 - int(f_h*0.03125)), (x1 + int(f_w*0.21), y1), color=[0, 255, 0], thickness=-1)
                 frame = cv.putText(frame, text=emotion+' (%0.2f)'%score, org=(x1 + 5, y1 - 3), fontFace=cv.FONT_HERSHEY_PLAIN,
                                    color=[0, 0, 0], fontScale=1, thickness=1)
-
-            #if return_type == 'RGB':
-            #    return cv.cvtColor(frame, cv.COLOR_BGR2RGB)
 
             rays[self.frame] = frame
         super().show(rays)

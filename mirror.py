@@ -219,10 +219,12 @@ if __name__=='__main__':
     import logger
     from emotions import EmotionShard, EmotionLens
     from behavior import WindowShard, ScreenShard
+    from faces import FaceShard
     from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION, TIMESTEP
 
     emotion_shard = EmotionShard()
-    shards = [CamShard(logdir='logs/test/'), emotion_shard]
+    #shards = [CamShard(logdir='logs/webcam/'), FaceShard('logs/faces/'), emotion_shard]
+    shards = [CamShard(), FaceShard('logs/faces/'), emotion_shard]
 
     # Viewing live
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
@@ -237,9 +239,10 @@ if __name__=='__main__':
     # Logging
     #shards.append(WindowShard(logfile=WINDOWLOG))
     #shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
-    #mirror = Mirror(shards=shards, lens=None, timestep=TIMESTEP, logfile=MIRRORLOG)
+    mirror = Mirror(shards=shards, lens=None, timestep=TIMESTEP, logfile=MIRRORLOG)
     #mirror.run(memorize=True, memory_blocks=[cam_block.apply, screenshot_block.apply])
+    mirror.run(memorize=True)
 
     # Dreaming
-    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.5, logfile=MIRRORLOG)
-    mirror.dream(from_date=datetime.datetime(year=2020, month=10, day=29, hour=12))
+    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.5, logfile=MIRRORLOG)
+    #mirror.dream(from_date=datetime.datetime(year=2020, month=10, day=29, hour=12))

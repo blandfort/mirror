@@ -64,7 +64,14 @@ class EmotionRecognition(object):
 
         return self.emotions[index], score
 
-    def recognize(self, frame):
+    def run_on_face(self, face):
+        gray = cv.cvtColor(face, cv.COLOR_BGR2GRAY)
+        emotion, score = self._predict(gray)
+
+        return {'emotion': emotion, 'score': score}
+        
+
+    def run(self, frame):
         """Perform emotion recognition on a single frame and return the results.
 
         Different from show_emotions(), this method does not return a modified frame."""
@@ -82,7 +89,7 @@ class EmotionRecognition(object):
                 results.append( {'emotion': emotion, 'score': score, 'position': (x1, y1, x2, y2)} )
         return results
 
-    def show_emotions(self, frame, return_type='BGR'):
+    def show(self, frame, return_type='BGR'):
         """Perform emotion recognition on a single frame and show the result
         by returning a modified frame.
 
