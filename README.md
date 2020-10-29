@@ -3,7 +3,6 @@
 Next steps could be:
 
 - Clean up the repo, add some documentation
-    - Make lens to display some logging
     - Organize stuff into subdirs
     - Add instructions so that training with FERPlus can easily be done
     - How to share the trained model?

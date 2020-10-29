@@ -33,9 +33,10 @@ class FaceShard(Shard):
             boxes, _ = self.mtcnn.detect(frame)
 
             faces = []
-            for bbox in boxes:
-                x1, y1, x2, y2 = int(round(bbox[0])), int(round(bbox[1])), int(round(bbox[2])), int(round(bbox[3]))
-                faces.append({'image': frame[y1:y2, x1:x2], 'bounding_box': (x1, y1, x2, y2)})
+            if boxes is not None:
+                for bbox in boxes:
+                    x1, y1, x2, y2 = int(round(bbox[0])), int(round(bbox[1])), int(round(bbox[2])), int(round(bbox[3]))
+                    faces.append({'image': frame[y1:y2, x1:x2], 'bounding_box': (x1, y1, x2, y2)})
 
             self.state = faces
             return self.state

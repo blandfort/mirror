@@ -84,6 +84,37 @@ class CamLens(Lens):
         # When everything is done, release the capture
         cv.destroyAllWindows()
 
+import json
+from memory import replace_float32
+
+class LogLens(Lens):
+    """Simple Lens to print Reflections of the Mirror
+    with a logger."""
+
+    def __init__(self):
+        import logger
+
+    def show(self, rays):
+        for name, ray in rays.items():
+            if self._printable(ray):
+                logging.info(f"Shard '{name}': {json.dumps(replace_float32(ray))}")
+            else:
+                logging.info(f"Shard '{name}': {str(type(ray))}")
+
+    def _printable(self, ray):
+        """For a given Ray, check the type to decide whether to include it in the log."""
+        if type(ray) in [str, int, float]:
+            return True
+        if type(ray) is dict:
+            if len(ray)<1:
+                return True
+            return self._printable(list(ray.values())[0])
+        if type(ray) in [list, tuple]:
+            if len(ray)<1:
+                return True
+            return self._printable(ray[0])
+        return False
+
 
 class Mirror:
     """Instantiate a Mirror.
@@ -228,7 +259,8 @@ if __name__=='__main__':
 
     # Viewing live
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
-    #mirror.run(memorize=False)
+    mirror = Mirror(shards=shards, lens=LogLens(), timestep=.5, logfile=MIRRORLOG)
+    mirror.run(memorize=False)
 
     # Logic to not remember everything in each step
     cam_block = CountdownBlock(blocking_shards=['webcam'], classes=emotion_shard.classes,
@@ -239,9 +271,9 @@ if __name__=='__main__':
     # Logging
     #shards.append(WindowShard(logfile=WINDOWLOG))
     #shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
-    mirror = Mirror(shards=shards, lens=None, timestep=TIMESTEP, logfile=MIRRORLOG)
+    #mirror = Mirror(shards=shards, lens=None, timestep=TIMESTEP, logfile=MIRRORLOG)
     #mirror.run(memorize=True, memory_blocks=[cam_block.apply, screenshot_block.apply])
-    mirror.run(memorize=True)
+    #mirror.run(memorize=True)
 
     # Dreaming
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.5, logfile=MIRRORLOG)
