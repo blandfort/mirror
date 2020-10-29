@@ -162,7 +162,8 @@ class Mirror:
                 if memorize:
                     self.memorize()
 
-                self.lens.show(rays)
+                if self.lens is not None:
+                    self.lens.show(rays)
 
                 # Wait a bit if we are too fast
                 t2 = time.time()
@@ -175,18 +176,21 @@ class Mirror:
 if __name__=='__main__':
     import logger
     from emotions import EmotionShard, EmotionLens
-    from config import MIRRORLOG
+    from behavior import WindowShard, ScreenShard
+    from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION
 
     shards = [CamShard(logdir='logs/test/'), EmotionShard()]
 
     # Viewing live
-    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
-    mirror.run(memorize=False)
+    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
+    #mirror.run(memorize=False)
 
     # Logging
-    #mirror = Mirror(shards=shards, lens=None, timestep=1., logfile=MIRRORLOG)
-    #mirror.run(memorize=True)
+    shards.append(WindowShard(logfile=WINDOWLOG))
+    shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
+    mirror = Mirror(shards=shards, lens=None, timestep=.2, logfile=MIRRORLOG)
+    mirror.run(memorize=True)
 
     # Dreaming
-    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.3, logfile=MIRRORLOG)
+    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.1, logfile=MIRRORLOG)
     #mirror.dream(from_date=datetime.datetime(year=2020, month=10, day=28, hour=18))

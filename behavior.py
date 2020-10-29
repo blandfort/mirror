@@ -3,6 +3,9 @@ import os
 import subprocess
 import re
 
+from mirror import Shard
+from memory import CSVMemory, ImageMemory
+
 
 class WindowShard(Shard):
 
@@ -46,6 +49,7 @@ class WindowShard(Shard):
 
 
 import pyscreenshot as ImageGrab
+import numpy as np
 
 def take_screenshot(resolution=None):
     im = ImageGrab.grab() # Note that you can also screenshot any given bounding box only
@@ -54,7 +58,10 @@ def take_screenshot(resolution=None):
         im = im.resize(resolution)
 
     #im.save(path)
-    return path
+
+    # Convert to open_cv format
+    image = np.array(im.convert('RGB'))[:, :, ::-1]
+    return image
 
 
 class ScreenShard(Shard):
