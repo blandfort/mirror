@@ -33,7 +33,7 @@ if __name__=='__main__':
     # Logging
     shards.append(WindowShard(logfile=WINDOWLOG))
     shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
-    mirror = Mirror(shards=shards, lens=LogLens(), timestep=TIMESTEP, logfile=MIRRORLOG)
+    mirror = Mirror(shards=shards, lens=LogLens(names=['emotions']), timestep=TIMESTEP, logfile=MIRRORLOG)
     mirror.run(memorize=True, memory_blocks=[face_block.apply, screenshot_block.apply])
     #mirror.run(memorize=True)
 

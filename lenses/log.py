@@ -9,11 +9,16 @@ class LogLens(Lens):
     """Simple Lens to print Reflections of the Mirror
     with a logger."""
 
-    def __init__(self):
+    def __init__(self, names=None):
         import logger
+
+        self.names = names
 
     def show(self, rays):
         for name, ray in rays.items():
+            if name not in self.names:
+                continue
+
             if self._printable(ray):
                 logging.info(f"Shard '{name}': {json.dumps(replace_float32(ray))}")
             else:

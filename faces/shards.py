@@ -2,7 +2,6 @@ import os
 import cv2 as cv
 from facenet_pytorch import MTCNN
 
-from emotion_recognition import EmotionRecognition
 from shards import Shard
 from memory import ImageMemory
 
