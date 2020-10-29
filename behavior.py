@@ -71,6 +71,7 @@ class ScreenShard(Shard):
     def __init__(self, resolution=None, **memory_kwargs):
         self.memory = ImageMemory(**memory_kwargs)
         self.resolution = resolution
+        self.state = None
 
     def reflect(self, rays):
         self.state = take_screenshot(self.resolution)

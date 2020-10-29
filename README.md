@@ -1,11 +1,11 @@
-# Mirro
+# Mirror
 
 Next steps could be:
 
 - Clean up the repo, add some documentation
     - Add other log functionality from before
-        - logic to not save everything every time
-        - face images instead of full capture
+        - face images instead of full capture -> should be possible to use no memory for webcam shard and have a new shard for faces (emotions can then take this result if present)
+    - Make lens to display some logging
     - Organize stuff into subdirs
     - Add instructions so that training with FERPlus can easily be done
     - How to share the trained model?

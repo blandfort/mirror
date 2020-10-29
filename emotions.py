@@ -14,6 +14,7 @@ class EmotionShard(Shard):
 
     def __init__(self, device=DEVICE, logfile=EMOTIONLOG):
         self.recognition = EmotionRecognition(device=device)
+        self.classes = self.recognition.emotions
         self.memory = CSVMemory(logfile=logfile)
 
         self.state = None
@@ -36,24 +37,26 @@ class EmotionLens(CamLens):
 
     def show(self, rays):
         frame = rays[self.frame]
-        f_h, f_w, c = frame.shape
 
-        detection = rays[self.emotions]
+        if frame is not None:
+            f_h, f_w, c = frame.shape
 
-        for result in detection:
-            x1, y1, x2, y2 = result['position']
-            emotion = result['emotion']
-            score = result['score']
+            detection = rays[self.emotions]
 
-            frame = cv.rectangle(frame, (x1, y1), (x2, y2), color=[0, 255, 0], thickness=1)
-            frame = cv.rectangle(frame, (x1, y1 - int(f_h*0.03125)), (x1 + int(f_w*0.21), y1), color=[0, 255, 0], thickness=-1)
-            frame = cv.putText(frame, text=emotion+' (%0.2f)'%score, org=(x1 + 5, y1 - 3), fontFace=cv.FONT_HERSHEY_PLAIN,
-                               color=[0, 0, 0], fontScale=1, thickness=1)
+            for result in detection:
+                x1, y1, x2, y2 = result['position']
+                emotion = result['emotion']
+                score = result['score']
 
-        #if return_type == 'RGB':
-        #    return cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+                frame = cv.rectangle(frame, (x1, y1), (x2, y2), color=[0, 255, 0], thickness=1)
+                frame = cv.rectangle(frame, (x1, y1 - int(f_h*0.03125)), (x1 + int(f_w*0.21), y1), color=[0, 255, 0], thickness=-1)
+                frame = cv.putText(frame, text=emotion+' (%0.2f)'%score, org=(x1 + 5, y1 - 3), fontFace=cv.FONT_HERSHEY_PLAIN,
+                                   color=[0, 0, 0], fontScale=1, thickness=1)
 
-        rays[self.frame] = frame
+            #if return_type == 'RGB':
+            #    return cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+
+            rays[self.frame] = frame
         super().show(rays)
 
 

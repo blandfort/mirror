@@ -58,6 +58,7 @@ class CSVMemory(Memory):
 
         with open(self.logfile, 'a') as f:
             f.write(line)
+        return line
 
     def remember(self, id_=None, from_date=None, to_date=None):
         if id_ is not None:

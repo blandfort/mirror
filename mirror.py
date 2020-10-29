@@ -15,6 +15,7 @@ class Shard(ABC):
 
     def __init__(self):
         self.memory = None
+        self.state = None
 
     @abstractmethod
     def reflect(self, rays: dict):
@@ -23,7 +24,7 @@ class Shard(ABC):
 
     def memorize(self, id_):
         """Memorize the current state."""
-        if self.memory is not None:
+        if self.memory is not None and self.state is not None:
             self.memory.memorize(self.state, id_=id_)
 
     def remember(self, id_):
@@ -45,6 +46,7 @@ class CamShard(Shard):
         else:
             logging.warning("Memory not activated for Shard '%s'."%self.name)
             self.memory = None
+        self.state = None
 
     def reflect(self, rays: dict):
         ret, frame = self.capture.read()
@@ -70,10 +72,13 @@ class CamLens(Lens):
         self.frame = frame_name
 
     def show(self, rays):
-        cv.imshow(str(self.__class__), rays[self.frame])
+        frame = rays[self.frame]
 
-        if cv.waitKey(1) & 0xFF == ord('q'):
-            raise Exception("Interrupted.")  #TODO handle this differently
+        if frame is not None:
+            cv.imshow(str(self.__class__), frame)
+
+            if cv.waitKey(1) & 0xFF == ord('q'):
+                raise Exception("Interrupted.")  #TODO handle this differently
 
     def __del__(self):
         # When everything is done, release the capture
@@ -108,16 +113,20 @@ class Mirror:
             rays[shard.name] = shard.reflect(rays)
         return rays
 
-    def memorize(self):
+    def memorize(self, blocked_shards=[]):
         """Memorize the current state."""
         info = {'timestamp': datetime.datetime.now().isoformat()}
-        #TODO not sure we want to store all of this for each time step
-        info['shards'] = [{'name': shard.name, 'class': str(shard.__class__)} for shard in self.shards]
+        info['shards'] = []
         info['timestep'] = self.timestep
-        self.memory.memorize(id_=self.current_id, content=info)
 
         for shard in self.shards:
+            if shard.name in blocked_shards:
+                continue
+
             shard.memorize(id_=self.current_id)
+            info['shards'].append({'name': shard.name, 'class': str(shard.__class__)})
+
+        self.memory.memorize(id_=self.current_id, content=info)
 
         self.current_id += 1
 
@@ -150,7 +159,15 @@ class Mirror:
         finally:
             logging.info("Waking up from the dream.")
 
-    def run(self, memorize=False):
+    def run(self, memorize=False, memory_blocks=[]):
+        """Run the Mirror.
+
+        Arguments:
+        - memorize: If True, states of Shards are memorized
+        - memory_blocks: Iterable of functions, where each function
+            takes the currently reflected Rays and outputs names of Shards
+            which should not memorize the current state.
+        """
         logging.info("Activating the Mirror.")
 
         try:
@@ -160,7 +177,11 @@ class Mirror:
                 rays = self.reflect()
 
                 if memorize:
-                    self.memorize()
+                    blocked_shards = []
+                    for block in memory_blocks:
+                        blocked_shards.extend(block(rays))
+
+                    self.memorize(blocked_shards=set(blocked_shards))
 
                 if self.lens is not None:
                     self.lens.show(rays)
@@ -173,24 +194,52 @@ class Mirror:
             logging.info("Deactivating the Mirror.")
 
 
+class CountdownBlock:
+
+    def __init__(self, frequencies: dict, classes, blocking_shards: list, base_frequency=1):
+        self.frequencies = frequencies
+        self.base_frequency = base_frequency
+        self.countdowns = {c: self.frequencies[c] if c in self.frequencies else self.base_frequency
+                            for c in classes}
+        self.block = blocking_shards
+
+    def apply(self, rays):
+        #TODO this stuff shouldn't be hardcoded for a particular shard
+        c = rays['emotions'][0]['emotion']
+
+        if self.countdowns[c]>1:
+            self.countdowns[c] -= 1
+            return self.block
+        else:
+            self.countdowns[c] = self.frequencies[c] if c in self.frequencies else self.base_frequency
+            return []
+
+
 if __name__=='__main__':
     import logger
     from emotions import EmotionShard, EmotionLens
     from behavior import WindowShard, ScreenShard
-    from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION
+    from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION, TIMESTEP
 
-    shards = [CamShard(logdir='logs/test/'), EmotionShard()]
+    emotion_shard = EmotionShard()
+    shards = [CamShard(logdir='logs/test/'), emotion_shard]
 
     # Viewing live
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
     #mirror.run(memorize=False)
 
+    # Logic to not remember everything in each step
+    cam_block = CountdownBlock(blocking_shards=['webcam'], classes=emotion_shard.classes,
+                                frequencies={'neutral': 20})
+    screenshot_block = CountdownBlock(blocking_shards=['screenshot'], classes=emotion_shard.classes,
+                                      frequencies={'neutral': 50}, base_frequency=2)
+
     # Logging
-    shards.append(WindowShard(logfile=WINDOWLOG))
-    shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
-    mirror = Mirror(shards=shards, lens=None, timestep=.2, logfile=MIRRORLOG)
-    mirror.run(memorize=True)
+    #shards.append(WindowShard(logfile=WINDOWLOG))
+    #shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
+    #mirror = Mirror(shards=shards, lens=None, timestep=TIMESTEP, logfile=MIRRORLOG)
+    #mirror.run(memorize=True, memory_blocks=[cam_block.apply, screenshot_block.apply])
 
     # Dreaming
-    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.1, logfile=MIRRORLOG)
-    #mirror.dream(from_date=datetime.datetime(year=2020, month=10, day=28, hour=18))
+    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.5, logfile=MIRRORLOG)
+    mirror.dream(from_date=datetime.datetime(year=2020, month=10, day=29, hour=12))
