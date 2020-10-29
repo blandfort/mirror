@@ -1,21 +1,26 @@
 import os
+import logging
 import cv2 as cv
 
 from emotion_recognition import EmotionRecognition
-from mirror import Shard, CamLens
+from shards import Shard
+from lenses import CamLens
 from memory import CSVMemory
-
-from config import DEVICE, EMOTIONLOG
 
 
 class EmotionShard(Shard):
 
     name = 'emotions'
 
-    def __init__(self, device=DEVICE, logfile=EMOTIONLOG):
+    def __init__(self, device='cpu', logfile=None):
         self.recognition = EmotionRecognition(device=device)
         self.classes = self.recognition.emotions
-        self.memory = CSVMemory(logfile=logfile)
+
+        if logfile is not None:
+            self.memory = CSVMemory(logfile=logfile)
+        else:
+            logging.warning("Memory not activated for Shard '%s'."%self.name)
+            self.memory = None
 
         self.state = None
 

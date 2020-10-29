@@ -3,10 +3,8 @@ import cv2 as cv
 from facenet_pytorch import MTCNN
 
 from emotion_recognition import EmotionRecognition
-from mirror import Shard
+from shards import Shard
 from memory import ImageMemory
-
-from config import DEVICE
 
 
 class FaceShard(Shard):
@@ -14,7 +12,7 @@ class FaceShard(Shard):
 
     name = 'faces'
 
-    def __init__(self, logdir=None, device=DEVICE, extension='png'):
+    def __init__(self, logdir=None, device='cpu', extension='png'):
         if logdir is not None:
             self.memory = ImageMemory(logdir=logdir, extension=extension)
         else:

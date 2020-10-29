@@ -4,6 +4,7 @@ Next steps could be:
 
 - Clean up the repo, add some documentation
     - Organize stuff into subdirs
+    - Revise analysis notebook to use Mirror class
     - Add instructions so that training with FERPlus can easily be done
     - How to share the trained model?
 - Properly formulate long-term vision
