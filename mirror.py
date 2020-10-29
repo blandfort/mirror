@@ -60,6 +60,7 @@ class Mirror:
         for id_ in ids:
             snippet = {shard.name: shard.remember(id_=id_) for shard in self.shards}
             snippet['timestamp'] = info[id_]['timestamp']
+            snippet['ID'] = int(id_)
             memory.append(snippet)
         return memory
 

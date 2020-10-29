@@ -3,9 +3,8 @@
 Next steps could be:
 
 - Clean up the repo, add some documentation
-    - Revise analysis notebook to use Mirror class
     - Add instructions so that training with FERPlus can easily be done
-    - How to share the trained model?
+    - Properly describe the code structure
 - Properly formulate long-term vision
 - Make the thing open source ;)
 - Think of ways to have emotion detection improve over time (like with active learning)

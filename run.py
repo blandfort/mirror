@@ -12,10 +12,10 @@ if __name__=='__main__':
     from blocks import CountdownBlock
 
     from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION, TIMESTEP
-    from config import DEVICE, EMOTIONLOG
+    from config import DEVICE, EMOTIONLOG, FACE_DIR
 
     emotion_shard = EmotionShard(logfile=EMOTIONLOG, device=DEVICE)
-    shards = [CamShard(), FaceShard('logs/faces/', device=DEVICE), emotion_shard]
+    shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE), emotion_shard]
 
     # Viewing live
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
