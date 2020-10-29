@@ -1,6 +1,7 @@
 import datetime
 import os
 import json
+import logging
 import numpy as np
 
 from abc import ABC, abstractmethod
@@ -48,6 +49,9 @@ class CSVMemory(Memory):
 
     def __init__(self, logfile):
         self.logfile = logfile
+
+        # Make sure the logfile exists
+        open(self.logfile, 'a').close()
 
     def memorize(self, content, id_):
         line = self._make_logline(content, id_)
@@ -114,13 +118,16 @@ class ImageMemory(Memory):
         self.dir = logdir
         self.ext = extension
 
+        # Make sure the directory exists
+        if not os.path.isdir(self.dir):
+            logging.info("Creating directory '%s' for storing images ..."%self.dir)
+            os.makedirs(self.dir)
+
     def memorize(self, image, id_, title=None):
         name = self._make_name(id_, title)
         image_path = os.path.join(self.dir, name)
 
         cv.imwrite(image_path, image)
-        #TODO if the directory doesn't exist, the writing doesn't work,
-        # but this doesn't seem to appear anywhere in the log
         return image_path
 
     def remember(self, id_, title=None):

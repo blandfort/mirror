@@ -1,7 +1,7 @@
 # Path settings
 MIRRORLOG = 'logs/mirror.log'
-EMOTIONLOG = 'logs/emotions_v2.log'
-BEHAVIORLOG = 'logs/behavior_v2.log'
+EMOTIONLOG = 'logs/emotions.log'
+BEHAVIORLOG = 'logs/behavior.log'
 SCREENSHOT_DIR = 'logs/screenshots/'
 CAMSHOT_DIR = 'logs/cam/'
 
