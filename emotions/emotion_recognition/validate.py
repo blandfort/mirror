@@ -1,9 +1,10 @@
 import torch
 from collections import Counter
 
-from training import MODEL_PATH, DATA_DIR, transform
+from training import transform
 from dataset import FERPlus
 from networks import NetworkBasic
+from config import MODEL_PATH, DATA_DIR
 
 
 testset = FERPlus(DATA_DIR, train=False, transform=transform)

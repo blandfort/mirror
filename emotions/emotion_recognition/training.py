@@ -5,10 +5,9 @@ import torch.optim as optim
 import os
 import numpy as np
 
-#TODO wrap this thing up as package, so that .networks is used
 from networks import NetworkBasic
-#from .networks import NetworkBasic
 from dataset import FERPlus
+from config import MODEL_PATH, DATA_DIR
 
 
 transform = transforms.Compose([
@@ -18,10 +17,6 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.5], std=[0.5])
 ])
 
-
-#TODO put paths to configuration files
-DATA_DIR = '../FERPlus/data'
-MODEL_PATH = '../models/own.pt'
 
 
 if __name__=='__main__':

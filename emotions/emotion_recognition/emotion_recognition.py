@@ -8,10 +8,7 @@ from facenet_pytorch import MTCNN
 
 from .dataset import FERPlus
 from .networks import NetworkBasic
-
-
-#TODO put the path into some configuration file or pass as argument to init
-MODEL_PATH = 'models/own.pt'
+from .config import MODEL_PATH
 
 
 class EmotionRecognition(object):
@@ -70,7 +67,6 @@ class EmotionRecognition(object):
 
         return {'emotion': emotion, 'score': score}
         
-
     def run(self, frame):
         """Perform emotion recognition on a single frame and return the results.
 

@@ -3,7 +3,6 @@
 Next steps could be:
 
 - Clean up the repo, add some documentation
-    - Add instructions so that training with FERPlus can easily be done
     - Properly describe the code structure
 - Properly formulate long-term vision
 - Make the thing open source ;)
@@ -53,26 +52,6 @@ Room for improvement:
 - Use other sources of information:
     - Log what is typed (be careful not to log passwords and similar data though)
     - Mouse movement and clicks (even the way how dynamically one moves the mouse might be telling about emotions)
-
-
-### Emotion Detection
-
-- Model trained on FERPlus seems reasonable already (SOTA on that dataset is not even that high)
-    - Happiness is detected alright
-    - For negative emotions it seems to be very conservative though
-- Display certainty of the model as well
-    - Not that bad, the model shows uncertainty in some unusual cases
-    - -> Still, model doesn't use softmax at the moment and thus becomes overconfident in stuff; perhaps this has to be adjusted
-- To improve further, could try the following:
-    - Not only consider majority class (to get also some more subtle expressions)
-    - Use additional datasets (compile some samples of aff-wild2, taking few from each video, rescaling and saving in separate directories so it can be read easily)
-    - Change model architecture (also consider adding dropout)
-    - Augment dataset by introducing noise or changing colors
-    - How about active learning with my own webcam data?
-
-Potential extensions:
-
-- Consider audio data as well
 
 
 ## Requirements
