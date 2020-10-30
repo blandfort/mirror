@@ -1,8 +1,7 @@
-
 import os
 import logging
 
-from emotion_recognition import EmotionRecognition
+from .emotion_recognition import EmotionRecognition
 
 from shards import Shard
 from memory import CSVMemory
