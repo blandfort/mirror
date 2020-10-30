@@ -2,8 +2,6 @@
 
 Next steps could be:
 
-- Clean up the repo, add some documentation
-    - Properly describe the code structure
 - Properly formulate long-term vision
 - Make the thing open source ;)
 - Think of ways to have emotion detection improve over time (like with active learning)
@@ -23,27 +21,65 @@ TODO explain main metaphors and where this project shall go
     - Could even consider sharing some of the data with the community for more comprehensive studies or even research projects
 
 
+## Usage
+
+### Set Up
+
+- Clone the repository
+- Make sure that Python is installed (tested with Python 3.7.3)
+- Create a virtual environment: `python3 -m venv venv`
+- Activate the virtual environment: `source venv/bin/activate`
+- Install the requirements: `pip install -r requirements.txt`
+- Adjust the configurations in `config.py`
+
+
+### Running the Mirror
+
+- The simplest way to run a Mirror is to call `python run.py`
+- Adjust `run.py` to use the Mirror in any of the following modes:
+    - Viewing: The Mirror observes and processes what is going on and gives you real-time feedback
+    - Logging: Instead (or on top) of giving real-time feedback, the Mirror stores its reflections on the hard disk
+    - Dreaming: The Mirror simulates previously logged states and gives feedback about them (like Viewing, but with data from the past)
+- Which data is processed by the Mirror and what is displayed can be adjusted by configuring the Mirror:
+    - Shards are individual modules which capture particular data (e.g. CamShard captures frames from the webcam)
+    - The Lens that is used decides which of the data from the Shards is displayed to the user and how this is done (e.g. CamLens shows the frames captured by the webcam in a stream)
+
+
+### Analyzing your Data
+
+- Currently all the code for analysis resides in the jupyter notebook `analysis.ipynb`
+- However, the plan is to extend this part quite a bit (see below)
+
+
+
 ## Code Structure
 
-TODO explain overall structure, what kind of modules we have and how the flow is
+- The core of this repository is the [Mirror](mirror.py)
+    - A Mirror contains a list of Shards, where each Shard captures a particular type of data
+    - Mirrors can also use a Lens, which describes how the captured data is displayed to the user
+- Basic Shards are described in [shards/](shards/)
+- Basic Lenses can be found in [lenses/](lenses/)
+- The Mirror as well as the Shards can use Memory to store their states. Memory classes reside in [memory/](memory/)
+- Sometimes we don't want to log all the data for every timestep. For such cases, there are MemoryBlocks, which are described in [blocks/](blocks/) and can be passed when running a Mirror to modify what is being logged
+- Additional modules go into their own directories. They generally should define Shards or Lenses to be plugged into the Mirror. For example:
+    - [emotions/](emotions/) contains a Shard to detect emotions from the webcam capture, and a Lens to display the result in a modified frame
+    - [behavior/](behavior/) has Shards for taking screenshots and observing the title of the currently active window
+    - [faces/](faces/) contains a Shard to detect faces in the webcam capture and return a list of face images cropped from the capture
 
-### Overview
 
-- Mirror: highest level, containing Shards and optionally a Lens
-    - Shard
-        - Memory: Can be used to store data of a certain type 
-    - Lens
-
+## Modules
 
 ### Analysis
 
-Also do:
+Some ideas for next steps:
 
 - Analyze some correlations, see if it makes any sense
+- Use Fourier transform to find patterns
 - Create reports (so that e.g. end of the week you can view a summary)
+- Use forecasting methods and predict which changes lead to a given desired outcome (e.g. make you more happy)
 
 
-### Logging Behavior
+### Behavior
 
 Room for improvement:
 
@@ -52,6 +88,8 @@ Room for improvement:
 - Use other sources of information:
     - Log what is typed (be careful not to log passwords and similar data though)
     - Mouse movement and clicks (even the way how dynamically one moves the mouse might be telling about emotions)
+
+NOTE: WindowShard only works in linux, as it uses the tool `xprop` under the hood.
 
 
 ## Requirements

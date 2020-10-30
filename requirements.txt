@@ -6,6 +6,7 @@ bleach==3.2.1
 certifi==2020.6.20
 cffi==1.14.3
 chardet==3.0.4
+cycler==0.10.0
 decorator==4.4.2
 defusedxml==0.6.0
 EasyProcess==0.3
@@ -28,7 +29,9 @@ jupyter-client==6.1.7
 jupyter-console==6.2.0
 jupyter-core==4.6.3
 jupyterlab-pygments==0.1.2
+kiwisolver==1.2.0
 MarkupSafe==1.1.1
+matplotlib==3.3.2
 mistune==0.8.4
 mss==6.0.0
 nbclient==0.5.1
