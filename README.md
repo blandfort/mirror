@@ -1,27 +1,71 @@
 # Mirror
 
+_See thyself through the lens of code._
+
+
 Next steps could be:
 
 - Properly formulate long-term vision
-- Make the thing open source ;)
+- Add MIT license thing to emotion detection code
+- Add a license
+- Make the thing open source ;) (think whether to move to github and do it as a group; could then simply have a link here and say the project moved)
 - Think of ways to have emotion detection improve over time (like with active learning)
 
 
 ## The Vision
 
-TODO explain main metaphors and where this project shall go
+TODO explain what the status is and where this project shall go (this has to be easy to understand; include examples)
+
+The purpose of this project is to develop software which helps you to learn more about who you are
+and assists you in making whatever changes you'd like to make.
+
 
 - Develop a tool to help people understand themselves
     - Putting you completely in charge regarding what you log, what you analyze and whether or not you share that with anyone
     - Decide what you care about and analyze exactly that: Should be possible to use annotation to make the system detect and log what you really care about (like stress, certain emotions, happiness etc.)
     - Analysis should give you more objective grounds to see what is actually good for you, breaking free from everyday manipulation
-- Build a community around that
-    - Share trained models and extensions with others
-    - Discuss insights and share ideas for using the software creatively
-    - Could even consider sharing some of the data with the community for more comprehensive studies or even research projects
+
+The hope is that eventually a community will grow around that software, where extensions to the software are shared with others and new ideas for using the software creatively emerge.
+
+
+### About Shards, Mirrors and Lenses
+
+TODO formulate that nicely
+
+- Metaphor:
+    - We build a "mirror" out of individual "shards" that reflect individual properties of you and your behavior back onto you
+    - We, our behavior and even our perception would thus be considered as light, or "rays" of light
+    - The idea is that all of this is already there and we can decide to hold up shards to reflect it back at us
+    - Analyzing would be done by holding a "lens" into the reflected light, the results still being rays, but potentially different types of rays
+    - The Mirror (probably implemented on shards level) can also "memorize", forming "memories" of the rays that passed through
+    - Memories can then be played back by "remembering"
+    - For visualization, we might introduce something like "screen" or "display"
+    - For more artistic stuff we could also consider "loops", to break the whole analogy and get deeper
+    - Can also have other entities that are not a part of Mirror or lenses anymore, but just use it as interface
+- Observation and logging ("shards" to form the mirror): Need to make it easy for people to add other things to log and configure what is logged
+    - Any shard takes in the current state (which might be done with additional tools like emotion detection)
+    - As output we have something that is observed at this moment
+    - Logging is not done by the shard but by the mirror (or some similar entity that combines results)
+- Analyzer should be quite generic, starting with correlation analysis
+- Visualization (bit later):
+    - evaluate the logs live to give direct feedback
+    - artistic stuff like displaying the web capture but altering it
+    - can even be a chatbot or similar agent that gives you feedback, telling you when to take breaks, calm down etc.
+
 
 
 ## Usage
+
+### Requirements
+
+- OpenCV: `pip install opencv-python` (note that on debian, version 4.4.0.44 causes issues, but 4.2.0.34 works)
+- PyTorch
+- Torchvision
+- facenet-pytorch
+- pyscreenshot
+- jupyter (for analysis part)
+- matplotlib (for analysis)
+
 
 ### Set Up
 
@@ -92,12 +136,3 @@ Room for improvement:
 NOTE: WindowShard only works in linux, as it uses the tool `xprop` under the hood.
 
 
-## Requirements
-
-- OpenCV: `pip install opencv-python` (note that on debian, version 4.4.0.44 causes issues, but 4.2.0.34 works)
-- PyTorch
-- Torchvision
-- facenet-pytorch
-- pyscreenshot
-- jupyter (for analysis part)
-- matplotlib (for analysis)

@@ -65,3 +65,8 @@ Potential extensions:
 - PyTorch
 - Torchvision
 - facenet-pytorch
+
+
+## Acknowledgements
+
+Some of the code (files `networks.py` and `emotion_recognition.py`) is based on PyPI package `facial-emotion-recognition` (0.3.4) by Rayyan Akhtar: [Go to PyPI page](https://pypi.org/project/facial-emotion-recognition/)
