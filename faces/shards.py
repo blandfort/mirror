@@ -57,6 +57,7 @@ class FaceShard(Shard):
 
                 face = {'image': self.memory.remember(id_=face_id, title=face_title)}
                 face['bounding_box'] = list(map(int, face_title.split('_')))
-            return self.memory.remember(id_=id_)
+                faces.append(face)
+            return faces
         else:
             return None
