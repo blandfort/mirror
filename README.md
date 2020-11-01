@@ -3,27 +3,50 @@
 _See thyself through the lens of code._
 
 
-Next steps could be:
+TODO
 
-- Properly formulate long-term vision
 - Add MIT license thing to emotion detection code
 - Add a license
 - Make the thing open source ;) (think whether to move to github and do it as a group; could then simply have a link here and say the project moved)
 - Think of ways to have emotion detection improve over time (like with active learning)
 
 
+
 ## The Vision
 
-TODO explain what the status is and where this project shall go (this has to be easy to understand; include examples)
+Simply speaking, the purpose of this project is to develop software
+that assists you in exploring yourself.
 
-The purpose of this project is to develop software which helps you to learn more about who you are
-and assists you in making whatever changes you'd like to make.
+The central tool for this self exploration is the Mirror, which enables you to log and analyze different aspects
+of your own behavior as you interact with your computer.
 
 
-- Develop a tool to help people understand themselves
-    - Putting you completely in charge regarding what you log, what you analyze and whether or not you share that with anyone
-    - Decide what you care about and analyze exactly that: Should be possible to use annotation to make the system detect and log what you really care about (like stress, certain emotions, happiness etc.)
-    - Analysis should give you more objective grounds to see what is actually good for you, breaking free from everyday manipulation
+### Use Cases
+
+To make the goal somewhat more concrete, consider the following example use cases:
+
+- You may want to find out more about what makes you happy, sad or angry when you are interacting with your computer. You can use Mirror to detect and log your emotions based on the video stream from your webcam, and then find correlations to contents you are viewing on your screen. [Status: basic version of emotion logging is there, but analysis still needs to be extended]
+- You might want to know how often and how long you are distracted during work. [Status: Not yet done]
+
+Note: You are completely in charge. You decide which data to collect, what you analyze and whether or not you share any of that with anyone.
+
+
+### Future Plans
+
+It is planned to extend the Mirror in various ways:
+
+- Individual components will be improved (see notes below)
+- Have the Mirror adapt to you, by means of annotations or other feedback mechanisms:
+    - Use active learning to fine-tune emotion detection on your own data
+    - Train models to detect classes you define (e.g. you might want to detect whether you look tired based on the webcam capture)
+    - Ultimately, you should be able to set your own objectives and have the system learn detect them from the available data
+- Additional information sources could be interesting to consider (e.g. data from a fitness tracker)
+
+Apart from helping you to understand yourself better,
+a longer term goal is to have the Mirror also actively assist you in making any changes to your behavior,
+so that you can optimize any measurable outcomes which you define (e.g. limit distractions or stay more relaxed during work).
+
+
 
 The hope is that eventually a community will grow around that software, where extensions to the software are shared with others and new ideas for using the software creatively emerge.
 
