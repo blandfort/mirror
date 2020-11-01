@@ -51,31 +51,6 @@ so that you can optimize any measurable outcomes which you define (e.g. limit di
 The hope is that eventually a community will grow around that software, where extensions to the software are shared with others and new ideas for using the software creatively emerge.
 
 
-### About Shards, Mirrors and Lenses
-
-TODO formulate that nicely
-
-- Metaphor:
-    - We build a "mirror" out of individual "shards" that reflect individual properties of you and your behavior back onto you
-    - We, our behavior and even our perception would thus be considered as light, or "rays" of light
-    - The idea is that all of this is already there and we can decide to hold up shards to reflect it back at us
-    - Analyzing would be done by holding a "lens" into the reflected light, the results still being rays, but potentially different types of rays
-    - The Mirror (probably implemented on shards level) can also "memorize", forming "memories" of the rays that passed through
-    - Memories can then be played back by "remembering"
-    - For visualization, we might introduce something like "screen" or "display"
-    - For more artistic stuff we could also consider "loops", to break the whole analogy and get deeper
-    - Can also have other entities that are not a part of Mirror or lenses anymore, but just use it as interface
-- Observation and logging ("shards" to form the mirror): Need to make it easy for people to add other things to log and configure what is logged
-    - Any shard takes in the current state (which might be done with additional tools like emotion detection)
-    - As output we have something that is observed at this moment
-    - Logging is not done by the shard but by the mirror (or some similar entity that combines results)
-- Analyzer should be quite generic, starting with correlation analysis
-- Visualization (bit later):
-    - evaluate the logs live to give direct feedback
-    - artistic stuff like displaying the web capture but altering it
-    - can even be a chatbot or similar agent that gives you feedback, telling you when to take breaks, calm down etc.
-
-
 
 ## Usage
 
@@ -119,12 +94,15 @@ TODO formulate that nicely
 
 
 
-## Code Structure
+## Code Structure – About Shards, Mirrors and Lenses
 
 - The core of this repository is the [Mirror](mirror.py)
-    - A Mirror contains a list of Shards, where each Shard captures a particular type of data
-    - Mirrors can also use a Lens, which describes how the captured data is displayed to the user
+    - Think of your behavior and the current situation as light, so individual components (e.g. what is done on the screen or what the webcam seens) would form Rays (of light)
+    - A Mirror contains a list of Shards, where each Shard captures a particular Ray
+    - Mirrors can also use a Lens, which describes how the captured Rays are displayed to the user
 - Basic Shards are described in [shards/](shards/)
+    - Any Shard takes in the current state (which might be done with additional tools like emotion detection or communicating with active windows)
+    - As output we have something that is observed at this moment by the Shard (e.g. the title of the currently active window) 
 - Basic Lenses can be found in [lenses/](lenses/)
 - The Mirror as well as the Shards can use Memory to store their states. Memory classes reside in [memory/](memory/)
 - Sometimes we don't want to log all the data for every timestep. For such cases, there are MemoryBlocks, which are described in [blocks/](blocks/) and can be passed when running a Mirror to modify what is being logged
