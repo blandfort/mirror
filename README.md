@@ -5,11 +5,7 @@ _See thyself through the lens of code._
 
 TODO
 
-- Add MIT license thing to emotion detection code
-- Add a license
-- Make the thing open source ;) (think whether to move to github and do it as a group; could then simply have a link here and say the project moved)
 - Think of ways to have emotion detection improve over time (like with active learning)
-
 
 
 ## The Vision
@@ -97,12 +93,12 @@ The hope is that eventually a community will grow around that software, where ex
 ## Code Structure – About Shards, Mirrors and Lenses
 
 - The core of this repository is the [Mirror](mirror.py)
-    - Think of your behavior and the current situation as light, so individual components (e.g. what is done on the screen or what the webcam seens) would form Rays (of light)
+    - Think of your behavior and the current situation as light, so individual components (e.g. what is done on the screen or what the webcam seens) would form Rays of light
     - A Mirror contains a list of Shards, where each Shard captures a particular Ray
     - Mirrors can also use a Lens, which describes how the captured Rays are displayed to the user
 - Basic Shards are described in [shards/](shards/)
     - Any Shard takes in the current state (which might be done with additional tools like emotion detection or communicating with active windows)
-    - As output we have something that is observed at this moment by the Shard (e.g. the title of the currently active window) 
+    - As output we have something that is observed at this moment by the Shard (e.g. the title of the currently active window or the current frame from the webcam) 
 - Basic Lenses can be found in [lenses/](lenses/)
 - The Mirror as well as the Shards can use Memory to store their states. Memory classes reside in [memory/](memory/)
 - Sometimes we don't want to log all the data for every timestep. For such cases, there are MemoryBlocks, which are described in [blocks/](blocks/) and can be passed when running a Mirror to modify what is being logged
@@ -134,6 +130,5 @@ Room for improvement:
     - Log what is typed (be careful not to log passwords and similar data though)
     - Mouse movement and clicks (even the way how dynamically one moves the mouse might be telling about emotions)
 
-NOTE: WindowShard only works in linux, as it uses the tool `xprop` under the hood.
-
+NOTE: WindowShard only works in linux, as it relies on the tool `xprop` under the hood.
 
