@@ -11,7 +11,8 @@ TODO
 ## The Vision
 
 Simply speaking, the purpose of this project is to develop software
-that assists you in exploring yourself.
+that assists you in exploring yourself, so that you can find out more about what makes you feel,
+what your typical behavioral patterns are and in which ways your own view might be biased or limited.
 
 The central tool for this self exploration is the Mirror, which enables you to log and analyze different aspects
 of your own behavior as you interact with your computer.
@@ -19,10 +20,10 @@ of your own behavior as you interact with your computer.
 
 ### Use Cases
 
-To make the goal somewhat more concrete, consider the following example use cases:
+To make the goal somewhat more concrete, consider the following examplary use cases:
 
 - You may want to find out more about what makes you happy, sad or angry when you are interacting with your computer. You can use Mirror to detect and log your emotions based on the video stream from your webcam, and then find correlations to contents you are viewing on your screen. [Status: basic version of emotion logging is there, but analysis still needs to be extended]
-- You might want to know how often and how long you are distracted during work. [Status: Not yet done]
+- You might want to know how often and how long you are distracted during work. Finding patterns in your distractions (e.g. you might distract yourself when trying to write a mail at certain times of the day) can be the first step to organizing your work more efficiently. [Status: Not yet done]
 
 Note: You are completely in charge. You decide which data to collect, what you analyze and whether or not you share any of that with anyone.
 
@@ -39,13 +40,8 @@ It is planned to extend the Mirror in various ways:
 - Additional information sources could be interesting to consider (e.g. data from a fitness tracker)
 
 Apart from helping you to understand yourself better,
-a longer term goal is to have the Mirror also actively assist you in making any changes to your behavior,
+a longer term goal is to have the Mirror also actively assist you in making any _changes_ to your behavior,
 so that you can optimize any measurable outcomes which you define (e.g. limit distractions or stay more relaxed during work).
-
-
-
-The hope is that eventually a community will grow around that software, where extensions to the software are shared with others and new ideas for using the software creatively emerge.
-
 
 
 ## Usage
