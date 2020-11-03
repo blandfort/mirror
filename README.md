@@ -7,10 +7,13 @@ TODO
 
 - Think of ways to have emotion detection improve over time (like with active learning)
 
+__Note:__ This is still a comparatively small early-stage project but I am looking for collaborators to make it grow.
+So if the Mirror resonates with you, please reach out ;)
+
 
 ## The Vision
 
-Simply speaking, the purpose of this project is to develop software
+The overall purpose of this project is to develop software
 that assists you in exploring yourself, so that you can find out more about what makes you feel,
 what your typical behavioral patterns are and in which ways your own view might be biased or limited.
 
@@ -64,13 +67,13 @@ so that you can optimize any measurable outcomes which you define (e.g. limit di
 - Create a virtual environment: `python3 -m venv venv`
 - Activate the virtual environment: `source venv/bin/activate`
 - Install the requirements: `pip install -r requirements.txt`
-- Adjust the configurations in `config.py`
+- Adjust the configurations in [config.py](config.py)
 
 
 ### Running the Mirror
 
 - The simplest way to run a Mirror is to call `python run.py`
-- Adjust `run.py` to use the Mirror in any of the following modes:
+- Adjust [run.py](run.py) to use the Mirror in any of the following modes:
     - Viewing: The Mirror observes and processes what is going on and gives you real-time feedback
     - Logging: Instead (or on top) of giving real-time feedback, the Mirror stores its reflections on the hard disk
     - Dreaming: The Mirror simulates previously logged states and gives feedback about them (like Viewing, but with data from the past)
@@ -81,7 +84,7 @@ so that you can optimize any measurable outcomes which you define (e.g. limit di
 
 ### Analyzing your Data
 
-- Currently all the code for analysis resides in the jupyter notebook `analysis.ipynb`
+- Currently all the code for analysis resides in the jupyter notebook [analysis.ipynb](analysis.ipynb)
 - However, the plan is to extend this part quite a bit (see below)
 
 
