@@ -25,8 +25,17 @@ of your own behavior as you interact with your computer.
 
 To make the goal somewhat more concrete, consider the following examplary use cases:
 
-- You may want to find out more about what makes you happy, sad or angry when you are interacting with your computer. You can use Mirror to detect and log your emotions based on the video stream from your webcam, and then find correlations to contents you are viewing on your screen. [Status: basic version of emotion logging is there, but analysis still needs to be extended]
-- You might want to know how often and how long you are distracted during work. Finding patterns in your distractions (e.g. you might distract yourself when trying to write a mail at certain times of the day) can be the first step to organizing your work more efficiently. [Status: Not yet done]
+- You may want to find out more about what makes you happy, sad or angry when you are interacting with your computer.
+  You can use Mirror to detect and log your emotions based on the video stream from your webcam,
+  and then find correlations to contents you are viewing on your screen.
+  [Status: basic version of emotion logging is there, but analysis still needs to be extended]
+- Find out what is the ratio of contents with positive vs negative sentiment.
+  How does it relate to your emotions?
+  [Status: Not yet done]
+- You might want to know how often and how long you are distracted during work.
+  Finding patterns in your distractions (e.g. you might distract yourself when trying to write a mail at certain times of the day)
+  with Mirror can be the first step to organizing your work more efficiently.
+  [Status: Not yet done]
 
 Note: You are completely in charge. You decide which data to collect, what you analyze and whether or not you share any of that with anyone.
 
@@ -123,7 +132,7 @@ Some ideas for next steps:
 
 Room for improvement:
 
-- For some windows (like browser), get more finegrained information
+- For some windows (like browser), get more finegrained information (e.g. texts viewed in browser)
 - Detect when multiple windows are used (like watching udemy on left side but taking notes on right)
 - Use other sources of information:
     - Log what is typed (be careful not to log passwords and similar data though)
