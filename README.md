@@ -28,7 +28,7 @@ To make the goal somewhat more concrete, consider the following examplary use ca
 - You may want to find out more about what makes you happy, sad or angry when you are interacting with your computer.
   You can use Mirror to detect and log your emotions based on the video stream from your webcam,
   and then find correlations to contents you are viewing on your screen.
-  [Status: basic version of emotion logging is there, but analysis still needs to be extended]
+  [Status: Basic version is there, but both analysis and emotion detection should still be improved]
 - Find out what is the ratio of contents with positive vs negative sentiment.
   How does it relate to your emotions?
   [Status: Not yet done]
