@@ -61,7 +61,7 @@ class FaceShard(Shard):
             for face_image in face_images:
                 face_id, face_title = os.path.splitext(face_image)[0].split('_', 1)
 
-                face = {'image': self.memory.remember(id_=face_id, title=face_title)}
+                face = {'image': self.memory._remember_id(id_=face_id, title=face_title)}
                 face['bounding_box'] = list(map(int, face_title.split('_')))
                 faces.append(face)
             return faces
