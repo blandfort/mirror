@@ -47,7 +47,13 @@ class FaceShard(Shard):
                 title = '_'.join(map(str, face['bounding_box']))
                 self.memory.memorize(face['image'], id_=id_, title=title)
 
-    def remember(self, id_):
+    def remember(self, ids):
+        memories = {}
+        for id_ in ids:
+            memories[id_] = self._remember_id(id_)
+        return memories
+
+    def _remember_id(self, id_):
         if self.memory is not None:
             face_images = self.memory.search(startswith=str(id_))
 
