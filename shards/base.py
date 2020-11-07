@@ -20,8 +20,8 @@ class Shard(ABC):
         if self.memory is not None and self.state is not None:
             self.memory.memorize(self.state, id_=id_)
 
-    def remember(self, id_):
+    def remember(self, ids):
         if self.memory is not None:
-            return self.memory.remember(id_=id_)
+            return self.memory.remember(ids=ids)
         else:
             return None

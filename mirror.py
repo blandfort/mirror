@@ -56,9 +56,13 @@ class Mirror:
         info = self.memory.remember(from_date=from_date, to_date=to_date)
         ids = sorted(list(info.keys()))
 
+        # Retrieve all the memories
+        shard_memories = {shard.name: shard.remember(ids=ids) for shard in self.shards}
+
+        # Now re-structure
         memory = []
         for id_ in ids:
-            snippet = {shard.name: shard.remember(id_=id_) for shard in self.shards}
+            snippet = {shard.name: shard_memories[shard.name][id_] for shard in self.shards}
             snippet['timestamp'] = info[id_]['timestamp']
             snippet['ID'] = int(id_)
             memory.append(snippet)

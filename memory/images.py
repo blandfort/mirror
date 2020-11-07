@@ -24,7 +24,13 @@ class ImageMemory(Memory):
         cv.imwrite(image_path, image)
         return image_path
 
-    def remember(self, id_, title=None):
+    def remember(self, ids):
+        memories = {}
+        for id_ in ids:
+            memories[id_] = self._remember_id(id_=id_)
+        return memories
+
+    def _remember_id(self, id_, title=None):
         name = self._make_name(id_=id_, title=title)
         filepath = os.path.join(self.dir, name)
 

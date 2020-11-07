@@ -48,9 +48,9 @@ class CSVMemory(Memory):
             f.write(line)
         return line
 
-    def remember(self, id_=None, from_date=None, to_date=None):
-        if id_ is not None:
-            return self._remember_id(id_=id_)
+    def remember(self, ids=None, from_date=None, to_date=None):
+        if ids is not None:
+            return self._remember_ids(ids=ids)
 
         memories = {}
         with open(self.logfile, 'r') as f:
@@ -69,9 +69,10 @@ class CSVMemory(Memory):
                 memories[line_id] = content
         return memories
 
-    def _remember_id(self, id_):
-        sid = str(id_)
+    def _remember_ids(self, ids):
+        sids = set([str(id_) for id_ in ids])
 
+        memories = {}
         with open(self.logfile, 'r') as f:
             for line in f:
                 parts = self._parse_logline(line)
@@ -80,9 +81,9 @@ class CSVMemory(Memory):
                     continue
 
                 line_id, timestamp, content = parts
-                if line_id==str(sid):
-                    return content
-        return None
+                if line_id in sids:
+                    memories[line_id] = content
+        return {id_: memories[id_] if id_ in memories else None for id_ in sids}
 
     def _parse_logline(self, line):
         parts = line.strip().split(',', 2)
