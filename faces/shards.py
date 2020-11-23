@@ -27,7 +27,7 @@ class FaceShard(Shard):
 
             f_h, f_w, c = frame.shape
             gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-            boxes, _ = self.mtcnn.detect(frame)
+            boxes, probs = self.mtcnn.detect(frame)
 
             faces = []
             if boxes is not None:

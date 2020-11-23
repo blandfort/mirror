@@ -5,7 +5,7 @@ if __name__=='__main__':
 
     from emotions import EmotionShard, EmotionLens
     from behavior import WindowShard, ScreenShard
-    from faces import FaceShard
+    from faces import FaceShard, FaceswapLens
     from mirror import Mirror
     from shards import CamShard
     from lenses import LogLens
@@ -15,12 +15,14 @@ if __name__=='__main__':
     from config import DEVICE, EMOTIONLOG, FACE_DIR
 
     emotion_shard = EmotionShard(logfile=EMOTIONLOG, device=DEVICE)
-    shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE), emotion_shard]
+    #shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE), emotion_shard]
+    shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE)]
 
     # Viewing live
-    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=0., logfile=MIRRORLOG)
+    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.1, logfile=MIRRORLOG)
     #mirror = Mirror(shards=shards, lens=LogLens(), timestep=.5, logfile=MIRRORLOG)
-    #mirror.run(memorize=False)
+    mirror = Mirror(shards=shards, lens=FaceswapLens(), timestep=.1, logfile=MIRRORLOG)
+    mirror.run(memorize=False)
 
     # Logic to not remember everything in each step
     cam_block = CountdownBlock(blocking_shards=['webcam'], classes=emotion_shard.classes,
@@ -33,8 +35,8 @@ if __name__=='__main__':
     # Logging
     shards.append(WindowShard(logfile=WINDOWLOG))
     shards.append(ScreenShard(logdir=SCREENSHOT_DIR, resolution=SCREENSHOT_RESOLUTION))
-    mirror = Mirror(shards=shards, lens=LogLens(names=['emotions']), timestep=TIMESTEP, logfile=MIRRORLOG)
-    mirror.run(memorize=True, memory_blocks=[face_block.apply, screenshot_block.apply])
+    #mirror = Mirror(shards=shards, lens=LogLens(names=['emotions']), timestep=TIMESTEP, logfile=MIRRORLOG)
+    #mirror.run(memorize=True, memory_blocks=[face_block.apply, screenshot_block.apply])
     #mirror.run(memorize=True)
 
     # Dreaming
