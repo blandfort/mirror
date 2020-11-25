@@ -33,7 +33,12 @@ class FaceswapLens(CamLens):
 
     def _swap_faces(self, frame, face1, face2):
         x1, y1, x2, y2 = face1['bounding_box']
-        if min(face1['image'].shape)<1 or min(face2['image'].shape)<1:
+        x21, y21, x22, y22 = face2['bounding_box']
+        # Sometimes the bounding box goes over the boundary of the frame.
+        # We ignore such cases.
+        if face1['image'].shape[0]!=y2-y1 or face1['image'].shape[1]!=x2-x1:
+            return frame
+        if face2['image'].shape[0]!=y22-y21 or face2['image'].shape[1]!=x22-x21:
             return frame
         frame[y1:y2, x1:x2] = cv.resize(face2['image'], (x2-x1, y2-y1), interpolation=cv.INTER_CUBIC)
         return frame

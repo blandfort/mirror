@@ -21,7 +21,7 @@ if __name__=='__main__':
     # Viewing live
     #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.1, logfile=MIRRORLOG)
     #mirror = Mirror(shards=shards, lens=LogLens(), timestep=.5, logfile=MIRRORLOG)
-    mirror = Mirror(shards=shards, lens=FaceswapLens(), timestep=.1, logfile=MIRRORLOG)
+    mirror = Mirror(shards=shards, lens=FaceswapLens(), timestep=.0, logfile=MIRRORLOG)
     mirror.run(memorize=False)
 
     # Logic to not remember everything in each step
