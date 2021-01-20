@@ -76,6 +76,9 @@ so that you can optimize any measurable outcomes which you define (e.g. limit di
 - Create a virtual environment: `python3 -m venv venv`
 - Activate the virtual environment: `source venv/bin/activate`
 - Install the requirements: `pip install -r requirements.txt`
+- Install emotion recognition package (optional, but necessary for emotion module):
+    - `pip install --upgrade setuptools wheel`
+    - `pip install git+https://github.com/blandfort/emotion_recognition.git`
 - Adjust the configurations in [config.py](config.py)
 
 

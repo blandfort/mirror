@@ -12,16 +12,17 @@ if __name__=='__main__':
     from blocks import CountdownBlock
 
     from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION, TIMESTEP
-    from config import DEVICE, EMOTIONLOG, FACE_DIR
+    from config import DEVICE, EMOTIONLOG, FACE_DIR, EMOTION_MODEL_PATH
 
-    emotion_shard = EmotionShard(logfile=EMOTIONLOG, device=DEVICE)
-    #shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE), emotion_shard]
-    shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE)]
+    emotion_shard = EmotionShard(logfile=EMOTIONLOG, device=DEVICE,
+            model_path=EMOTION_MODEL_PATH)
+    shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE), emotion_shard]
+    #shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE)]
 
     # Viewing live
-    #mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.1, logfile=MIRRORLOG)
+    mirror = Mirror(shards=shards, lens=EmotionLens(), timestep=.1, logfile=MIRRORLOG)
     #mirror = Mirror(shards=shards, lens=LogLens(), timestep=.5, logfile=MIRRORLOG)
-    mirror = Mirror(shards=shards, lens=FaceswapLens(), timestep=.0, logfile=MIRRORLOG)
+    #mirror = Mirror(shards=shards, lens=FaceswapLens(), timestep=.0, logfile=MIRRORLOG)
     mirror.run(memorize=False)
 
     # Logic to not remember everything in each step
