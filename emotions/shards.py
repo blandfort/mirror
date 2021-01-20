@@ -1,7 +1,7 @@
 import os
 import logging
 
-from .emotion_recognition import EmotionRecognition
+from emotion_recognition import EmotionRecognition
 
 from shards import Shard
 from memory import CSVMemory
@@ -11,8 +11,11 @@ class EmotionShard(Shard):
 
     name = 'emotions'
 
-    def __init__(self, device='cpu', logfile=None):
-        self.recognition = EmotionRecognition(device=device)
+    def __init__(self, model_path, logfile=None, **kwargs):
+        """Initialize a Shard to analyze emotions from the webcam stream.
+
+        kwargs are passed to emotion_recognition.EmotionRecognition."""
+        self.recognition = EmotionRecognition(model_path=model_path, **kwargs)
         self.classes = self.recognition.emotions
 
         if logfile is not None:

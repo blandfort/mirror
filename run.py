@@ -12,9 +12,10 @@ if __name__=='__main__':
     from blocks import CountdownBlock
 
     from config import MIRRORLOG, WINDOWLOG, SCREENSHOT_DIR, SCREENSHOT_RESOLUTION, TIMESTEP
-    from config import DEVICE, EMOTIONLOG, FACE_DIR
+    from config import DEVICE, EMOTIONLOG, FACE_DIR, EMOTION_MODEL_PATH
 
-    emotion_shard = EmotionShard(logfile=EMOTIONLOG, device=DEVICE)
+    emotion_shard = EmotionShard(logfile=EMOTIONLOG, device=DEVICE,
+            model_path=EMOTION_MODEL_PATH)
     #shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE), emotion_shard]
     shards = [CamShard(), FaceShard(FACE_DIR, device=DEVICE)]
 
