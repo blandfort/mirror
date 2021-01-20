@@ -1,8 +1,0 @@
-__pycache__/*
-
-# Model files (too large for repo)
-models/*
-
-# Datasets
-FERPlus
-FERPlus/*
